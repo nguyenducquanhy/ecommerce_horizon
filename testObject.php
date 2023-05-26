@@ -1,5 +1,6 @@
 <?php
-    include'library/connect.php';
+include'library/cors.php';
+include'library/connect.php';
     class user{
         public $id;
         public $name;
