@@ -15,7 +15,7 @@
     array_push($array,$value);
 
 
-    echo json_encode($value,JSON_UNESCAPED_UNICODE)
+    echo json_encode($array,JSON_UNESCAPED_UNICODE)
 
 
 ?>
