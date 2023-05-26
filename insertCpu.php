@@ -1,6 +1,6 @@
 
 <?php
-
+    
 
     include'library/cors.php';
     include'library/connect.php';  
@@ -11,7 +11,7 @@
     $query="insert into Cpu( idCatalogy, name) value ('$idCatalogy','$name')";
 
     $result=mysqli_query($connect,$query);    
-
+ 
     if($result){        
         
      echo json_encode("insert success",JSON_UNESCAPED_UNICODE );
