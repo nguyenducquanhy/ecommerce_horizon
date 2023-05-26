@@ -11,9 +11,12 @@
     include'library/connect.php';
 
     $value=$_POST["value"];
+    
     $array=array();
-    array_push($array,$value);
 
+    foreach($item as $value){
+        array_push($array,$item);
+    }
 
     echo json_encode($array,JSON_UNESCAPED_UNICODE)
 
