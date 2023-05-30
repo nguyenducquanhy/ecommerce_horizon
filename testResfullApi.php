@@ -31,14 +31,14 @@
     function putMethod(){
         $json = file_get_contents('php://input');
         $data = json_decode($json,true);
-        $value=$data;
+        $value=$data['putValue'];
         echo "put".$value;
     }
 
     function deleteMethod(){
         $json = file_get_contents('php://input');
         $data = json_decode($json,true);
-        $value=$data;
+        $value=$data['deleteValue'];
         echo "delete".$value;
     }
 
