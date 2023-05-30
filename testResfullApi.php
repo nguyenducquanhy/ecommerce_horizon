@@ -1,19 +1,41 @@
 <?php
 
     if($_SERVER['REQUEST_METHOD']==='GET'){
-        echo "get";
+        getMethod();
     }
 
     if($_SERVER['REQUEST_METHOD']==='POST'){
-        echo "post";
+        postMethod();
     }
 
     if($_SERVER['REQUEST_METHOD']==='PUT'){
-        echo "put";
+        putMethod();
     }
 
     if($_SERVER['REQUEST_METHOD']==='DELETE'){
-        echo "delete";
+        deleteMethod();
+    }
+
+
+
+    function getMethod(){
+        $value=$_GET['getValue'];
+        echo "get".$value;
+    }
+
+    function postMethod(){
+        $value=$_POST['postValue'];
+        echo "post".$value;
+    }
+
+    function putMethod(){
+        $value=$_POST['putValue'];
+        echo "put".$value;
+    }
+
+    function deleteMethod(){
+        $value=$_POST['deleteValue'];
+        echo "delete".$value;
     }
 
 ?>
