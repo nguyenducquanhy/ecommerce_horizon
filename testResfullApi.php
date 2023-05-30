@@ -1,4 +1,19 @@
 <?php
+
+    class User{
+        public $id;
+        public $name;
+        public $age;
+        
+        public function __construct($id,$name,$age)
+        {
+            $this->id=$id;
+            $this->name=$name;
+            $this->age = $age;   
+        }
+
+    }
+
     include'library/cors.php';
     if($_SERVER['REQUEST_METHOD']==='GET'){
         getMethod();
@@ -24,8 +39,15 @@
     function postMethod(){
         $json = file_get_contents('php://input');
         $data = json_decode($json,true);
-        $value=$data['postValue'];
-        echo json_encode("post".$value,JSON_UNESCAPED_UNICODE);
+        $item=$data['postValue'];
+        
+        $id=$item['id'];        
+        $name = $item['name'];
+        $age = $item['age'];
+
+        $value=new User($id,$name,$age);
+
+        echo json_encode($value ,JSON_UNESCAPED_UNICODE);
     }
 
     function putMethod(){
