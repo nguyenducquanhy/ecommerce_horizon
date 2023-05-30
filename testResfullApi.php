@@ -16,32 +16,30 @@
         deleteMethod();
     }
 
-
-
     function getMethod(){
         $value=$_GET['getValue'];
-        echo "get".$value;
+        echo json_encode("get".$value);
     }
 
     function postMethod(){
         $json = file_get_contents('php://input');
         $data = json_decode($json,true);
         $value=$data['postValue'];
-        echo "post".$value;
+        echo json_encode("post".$value);
     }
 
     function putMethod(){
         $json = file_get_contents('php://input');
         $data = json_decode($json,true);
         $value=$data['putValue'];
-        echo "put".$value;
+        echo json_encode("put".$value);
     }
 
     function deleteMethod(){
         $json = file_get_contents('php://input');
         $data = json_decode($json,true);
         $value=$data['deleteValue'];
-        echo "delete".$value;
+        echo json_encode("delete".$value);
     }
 
 ?>
