@@ -22,7 +22,7 @@ include'library/connect.php';
     
     for ($i=0; $i < sizeof($data); $i++) {
 
-        $item=$data[$i];            
+        $item=$data[$i];
         
         $id=$item['id'];        
         $name = $item['name'];
