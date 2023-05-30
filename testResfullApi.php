@@ -1,5 +1,5 @@
 <?php
-
+    include'library/cors.php';
     if($_SERVER['REQUEST_METHOD']==='GET'){
         getMethod();
     }
