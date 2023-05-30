@@ -24,7 +24,9 @@
     }
 
     function postMethod(){
-        $value=$_POST['postValue'];
+        $json = file_get_contents('php://input');
+        $data = json_decode($json,true);
+        $value=$data['postValue'];
         echo "post".$value;
     }
 
