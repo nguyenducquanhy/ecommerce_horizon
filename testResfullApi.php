@@ -29,12 +29,16 @@
     }
 
     function putMethod(){
-        $value=$_POST['putValue'];
+        $json = file_get_contents('php://input');
+        $data = json_decode($json,true);
+        $value=$data;
         echo "put".$value;
     }
 
     function deleteMethod(){
-        $value=$_POST['deleteValue'];
+        $json = file_get_contents('php://input');
+        $data = json_decode($json,true);
+        $value=$data;
         echo "delete".$value;
     }
 
