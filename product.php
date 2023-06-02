@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 if($_SERVER['REQUEST_METHOD']==='GET'){
     getProduct();
 }
@@ -47,13 +44,15 @@ function insertProduct(){
     if($result){
         $row=mysqli_fetch_array($result);   
         $arr=Array(
-            "result" => $row['result']
-        );
-      
+            "status" => $row['result']
+        );      
         echo json_encode($arr );
     }
     else{  
-        echo 504 ;
+        $arr=Array(
+            "status" => 504
+        );
+        echo json_encode($arr );
     }
     
 }
@@ -63,7 +62,110 @@ function updateProduct(){
     include'library/connect.php';
     $json = file_get_contents('php://input');
     $data = json_decode($json,true);
-    echo json_encode("put ".$data ,JSON_UNESCAPED_UNICODE);
+
+    $idProduct =$data['idProduct'];
+
+    $idCategoryInput =$data['idCategoryInput'];
+    $IDTradeMarkInput =$data['IDTradeMarkInput'];
+    $IdSpecificationsInput =$data['IdSpecificationsInput'];
+    $NameInput =$data['NameInput'];
+    $SlugInput =$data['SlugInput'];
+    $CurrentPriceInput =$data['CurrentPriceInput'];
+    $OldPriceInput =$data['OldPriceInput'];
+    $dateDiscountInput =$data['dateDiscountInput'];
+
+    $query="update Product SET ";
+
+    $count=0;
+    
+    if($idCategoryInput!=-1){       
+        $count=1;
+        $query=$query."idCategory='$idCategoryInput'";
+    }
+
+    if($IDTradeMarkInput!=-1){
+        if($count==1){
+            $query=$query.",";
+        }else{
+            $count=1;
+        }
+        $query=$query."IDTradeMark='$IDTradeMarkInput'";
+    }
+
+    if($IdSpecificationsInput!=-1){
+        if($count==1){
+            $query=$query.",";
+        }else{
+            $count=1;
+        }
+        $query=$query." IdSpecifications='$IdSpecificationsInput'";
+    }
+
+    if($NameInput!=-1){
+        if($count==1){
+            $query=$query.",";
+        }else{
+            $count=1;
+        }
+        $query=$query." Name='$NameInput'";
+    }
+
+    if($SlugInput!=-1){
+        if($count==1){
+            $query=$query.",";
+        }else{
+            $count=1;
+        }
+        $query=$query." Slug='$SlugInput'";
+    }
+
+    if($CurrentPriceInput!=-1){
+        if($count==1){
+            $query=$query.",";
+        }else{
+            $count=1;
+        }
+        $query=$query." CurrentPrice='$CurrentPriceInput'";
+    }
+
+    if($OldPriceInput!=-1){
+        if($count==1){
+            $query=$query.",";
+        }else{
+            $count=1;
+        }
+        $query=$query." OldPrice='$OldPriceInput'";
+    }
+
+    if($dateDiscountInput!=-1){
+        if($count==1){
+            $query=$query.",";
+        }else{
+            $count=1;
+        }
+        $query=$query." dateDiscount='$dateDiscountInput'";
+    }
+
+    $query=$query." where Id= $idProduct";
+    
+    // echo $query;
+
+    $result=mysqli_query($connect,$query);
+
+    if($result){
+        $arr=Array(
+            "status" => 200
+        );
+        echo json_encode($arr );
+    }
+    else{  
+        $arr=Array(
+            "status" => 504
+        );
+        echo json_encode($arr );
+    }
+
+
 }
 
 function hideProduct(){
@@ -72,6 +174,28 @@ function hideProduct(){
     $json = file_get_contents('php://input');
     $data = json_decode($json,true);
     echo json_encode("put ".$data ,JSON_UNESCAPED_UNICODE);
+
+    $idProduct =$data['idProduct'];
+
+    $query=" update Product SET idStatusProduct=2 where Id= '$idProduct'";
+    
+    // echo $query;
+
+    $result=mysqli_query($connect,$query);
+
+    if($result){
+        $arr=Array(
+            "status" => 200
+        );
+        echo json_encode($arr );
+    }
+    else{  
+        $arr=Array(
+            "status" => 504
+        );
+        echo json_encode($arr );
+    }
+
 }
 
 
