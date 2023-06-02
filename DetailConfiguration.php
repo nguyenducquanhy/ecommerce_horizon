@@ -40,11 +40,20 @@ function getDetailConfigurationById(){
 
     $result=mysqli_query($connect,$query);    
     if($result){   
-        $newProduct;
-        $row=mysqli_fetch_array($result);    
-        $newProduct=new DetailConfiguration($row['ID'],$row['idProduct'], $row['content']);                
-                
-     echo json_encode($newProduct,JSON_UNESCAPED_UNICODE );
+        $row=mysqli_fetch_array($result);   
+        if($row['status']){
+            $arr=Array(
+                "status" => $row['status']
+            );
+            echo json_encode($arr );
+        }
+        else{
+            $newProduct;         
+            $newProduct=new DetailConfiguration($row['ID'],$row['idProduct'], $row['content']);               
+                    
+            echo json_encode($newProduct,JSON_UNESCAPED_UNICODE );
+        }
+        
     }
     else{
         $arr=Array(
