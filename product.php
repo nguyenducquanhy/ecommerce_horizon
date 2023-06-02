@@ -25,15 +25,28 @@ function getProduct(){
 }
 
 function insertProduct(){
-    $idCategoryInput =$_POST['idCategoryInput'];
-    $IDTradeMarkInput =$_POST['IDTradeMarkInput'];
-    // $IdSpecificationsInput =$_POST['IdSpecificationsInput'];
-    // $NameInput =$_POST['NameInput'];
-    // $SlugInput =$_POST['SlugInput'];
-    // $CurrentPriceInput =$_POST['CurrentPriceInput'];
 
-    echo $idCategoryInput;
+ 
+        $json = file_get_contents('php://input');
+        $data = json_decode($json,true);
+        
+
+
+        // echo json_encode("put ".$data['idRole'].$data['username'].$data['fullname'] ,JSON_UNESCAPED_UNICODE);
+
+    $idCategoryInput =$data['idCategoryInput'];
+    $IDTradeMarkInput =$data['IDTradeMarkInput'];
+    $IdSpecificationsInput =$data['IdSpecificationsInput'];
+    $NameInput =$data['NameInput'];
+    $SlugInput =$data['SlugInput'];
+    $CurrentPriceInput =$data['CurrentPriceInput'];
+
+    echo $idCategoryInput;    
     echo $IDTradeMarkInput;
+    echo $IdSpecificationsInput;    
+    echo $NameInput;
+    echo $SlugInput;    
+    echo $CurrentPriceInput;
 
     
 }
