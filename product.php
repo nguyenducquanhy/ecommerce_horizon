@@ -3,9 +3,6 @@ include'library/cors.php';
 include'library/connect.php';
 
 
-
-
-
 if($_SERVER['REQUEST_METHOD']==='GET'){
     getMethod();
 }
