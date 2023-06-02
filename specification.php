@@ -1,5 +1,5 @@
 <?php
-include'library/cors.php';
+//include'library/cors.php';
 include'library/connect.php';
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
@@ -12,15 +12,17 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $IdCOLORInput =$_POST['IdCOLORInput'];
     $IdOSInput=$_POST['IdOSInput'];
 
-    $query="call login('$IdCPUInput','$IdRAMInput','$IdDISKInput','$IdVGAInput',
+    
+    $query="call insertSpecification('$IdCPUInput','$IdRAMInput','$IdDISKInput','$IdVGAInput',
                     '$IdSCREENInput','$IdCOLORInput','$IdOSInput')";
+                    
     $result=mysqli_query($connect,$query);
 
     if($result){
-                
-        $row=mysqli_fetch_row($result);
         
-        echo json_encode ($row, JSON_UNESCAPED_UNICODE);
+        $row=mysqli_fetch_array($result);
+        
+        echo $row['idSpecification'];
           
     }
     else{
