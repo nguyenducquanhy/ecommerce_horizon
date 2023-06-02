@@ -1,6 +1,6 @@
 <?php
-//include'library/cors.php';
-include'library/connect.php';
+
+
 
 
 if($_SERVER['REQUEST_METHOD']==='GET'){
@@ -21,18 +21,16 @@ if($_SERVER['REQUEST_METHOD']==='DELETE'){
 
 
 function getProduct(){
-
+    include'library/cors.php';
+    include'library/connect.php';
 }
 
 function insertProduct(){
-
+    include'library/cors.php';
+    include'library/connect.php';
  
-        $json = file_get_contents('php://input');
-        $data = json_decode($json,true);
-        
-
-
-        // echo json_encode("put ".$data['idRole'].$data['username'].$data['fullname'] ,JSON_UNESCAPED_UNICODE);
+    $json = file_get_contents('php://input');
+    $data = json_decode($json,true);
 
     $idCategoryInput =$data['idCategoryInput'];
     $IDTradeMarkInput =$data['IDTradeMarkInput'];
@@ -41,24 +39,32 @@ function insertProduct(){
     $SlugInput =$data['SlugInput'];
     $CurrentPriceInput =$data['CurrentPriceInput'];
 
-    echo $idCategoryInput;    
-    echo $IDTradeMarkInput;
-    echo $IdSpecificationsInput;    
-    echo $NameInput;
-    echo $SlugInput;    
-    echo $CurrentPriceInput;
+    $query="call insertProduct('$idCategoryInput', '$IDTradeMarkInput', '$IdSpecificationsInput',
+    '$NameInput', '$SlugInput', '$CurrentPriceInput')";
 
+    $result=mysqli_query($connect,$query);
+
+    if($result){
+        $row=mysqli_fetch_array($result);        
+        echo $row['result'];
+    }
+    else{  
+        echo 504 ;
+    }
     
 }
 
 function updateProduct(){
+    include'library/cors.php';
+    include'library/connect.php';
     $json = file_get_contents('php://input');
     $data = json_decode($json,true);
     echo json_encode("put ".$data ,JSON_UNESCAPED_UNICODE);
-
 }
 
 function hideProduct(){
+    include'library/cors.php';
+    include'library/connect.php';
     $json = file_get_contents('php://input');
     $data = json_decode($json,true);
     echo json_encode("put ".$data ,JSON_UNESCAPED_UNICODE);

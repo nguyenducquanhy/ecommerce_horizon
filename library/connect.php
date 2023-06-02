@@ -1,11 +1,7 @@
 <?php
 
-    
+
         
-    $SUCCESS=200;
-    $ERROR=504;
-    $COLLISION=503;
-    
     $hostname = "103.200.23.139";
     $username = "horizonn_nguyenducquan";
     $password = "quanhy2001";
