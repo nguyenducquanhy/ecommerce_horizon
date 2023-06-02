@@ -16,7 +16,7 @@ $password = $_POST['password'];
         }
     } 
 
-    $query="select idRole, username,  urlAvata from User WHERE username = '$username' and password = '$password'";
+    $query="call login($username,$password)";
 
     $result=mysqli_query($connect,$query);
     if($result){
