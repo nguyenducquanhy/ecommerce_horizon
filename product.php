@@ -45,8 +45,13 @@ function insertProduct(){
     $result=mysqli_query($connect,$query);
 
     if($result){
-        $row=mysqli_fetch_array($result);        
-        echo $row['result'];
+        $row=mysqli_fetch_array($result);   
+        $arr=Array();
+        array_push($arr,Array(
+            "result" => $row['result']
+        ));
+      
+        echo json_encode($arr );
     }
     else{  
         echo 504 ;
