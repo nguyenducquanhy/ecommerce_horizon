@@ -38,14 +38,13 @@ function getDetailConfigurationById(){
 
     $query="call getDetailConfigurationById('$idProduct')";
 
-    $result=mysqli_query($connect,$query);
-    $array=array();
+    $result=mysqli_query($connect,$query);    
     if($result){   
-        while($row=mysqli_fetch_array($result)){           
-            $newProduct=new DetailConfiguration($row['ID'],$row['idProduct'], $row['content']);
-            array_push($array,$newProduct);            
-        }        
-     echo json_encode($array,JSON_UNESCAPED_UNICODE );
+        $newProduct;
+        $row=mysqli_fetch_array($result);    
+        $newProduct=new DetailConfiguration($row['ID'],$row['idProduct'], $row['content']);                
+                
+     echo json_encode($newProduct,JSON_UNESCAPED_UNICODE );
     }
     else{
         $arr=Array(
