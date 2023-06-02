@@ -1,4 +1,36 @@
 <?php
+
+class product{
+    public $idProduct ;
+
+    public $idCategory ;
+    public $IDTradeMark;
+    public $IdSpecifications;
+    public $Name;
+    public $Slug;
+    public $CurrentPrice;
+    public $OldPrice ;
+    public $dateDiscount;
+
+    public function __construct ($idProduct,$idCategory,$IDTradeMark,
+                                $IdSpecifications,$Name,$Slug,
+                                $CurrentPrice,$OldPrice,$dateDiscount){
+                                    
+        $this ->idProduct = $idProduct;
+        $this ->idCategory = $idCategory;
+        $this ->IDTradeMark = $IDTradeMark;
+        $this ->IdSpecifications = $IdSpecifications;
+        $this ->Name = $Name;
+        $this ->Slug = $Slug;
+        $this ->CurrentPrice = $CurrentPrice;
+        $this ->OldPrice = $OldPrice;
+        $this ->dateDiscount = $dateDiscount;
+    }
+
+
+
+}
+
     include'library/cors.php';
     include'library/connect.php';
 
@@ -6,11 +38,13 @@
     $IDTradeMarkInput =$_POST['IDTradeMarkInput'];    
     $idStatusProduct =$_POST['idStatusProduct'];
 
+  
+
     $query="select *from Product where ";
 
     $count=0;
     
-    if($idCategoryInput!=-1){       
+    if($idCategoryInput!=-1){
         $count=1;
         $query=$query."idCategory='$idCategoryInput'";
     }
@@ -30,25 +64,41 @@
         }else{
             $count=1;
         }
-        $query=$query." idStatusProduct='$idStatusProduct'";
+        $query=$query."idStatusProduct='$idStatusProduct'";
     }
 
  
-     echo $query;
+    // echo $query;
 
-    // $result=mysqli_query($connect,$query);
+    $result=mysqli_query($connect,$query);
+    
+    if($result){
+        $array=array();
 
-    // if($result){
-    //     $arr=Array(
-    //         "status" => 200
-    //     );
-    //     echo json_encode($arr );
-    // }
-    // else{  
-    //     $arr=Array(
-    //         "status" => 504
-    //     );
-    //     echo json_encode($arr );
-    // }
+        while($row=mysqli_fetch_array($result)){           
+            $newProduct=new product(
+                $row['Id'],$row['idCategory'], $row['IDTradeMark'],
+                $row['IdSpecifications'],$row['Name'],$row['Slug'],
+                $row['CurrentPrice'],$row['OldPrice'],$row['dateDiscount']);
+            array_push($array,$newProduct);            
+        }
+        if(sizeof($array)==0){
+            $arr=Array(
+                "status" => 204 
+            );
+            echo json_encode($arr );
+        }
+        else{
+            echo json_encode($array,JSON_UNESCAPED_UNICODE );
+        }
+        
+     
+    }
+    else{  
+        $arr=Array(
+            "status" => 504
+        );
+        echo json_encode($arr );
+    }
 
 ?>
