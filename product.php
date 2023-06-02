@@ -46,10 +46,9 @@ function insertProduct(){
 
     if($result){
         $row=mysqli_fetch_array($result);   
-        $arr=Array();
-        array_push($arr,Array(
+        $arr=Array(
             "result" => $row['result']
-        ));
+        );
       
         echo json_encode($arr );
     }
