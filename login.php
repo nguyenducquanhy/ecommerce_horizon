@@ -16,7 +16,7 @@ $password = $_POST['password'];
         }
     } 
 
-    $query="call login($username,$password)";
+    $query="call login('$username','$password')";
 
     $result=mysqli_query($connect,$query);
     if($result){
