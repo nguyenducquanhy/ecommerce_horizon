@@ -33,7 +33,12 @@
     function putMethod(){
         $json = file_get_contents('php://input');
         $data = json_decode($json,true);
-        echo json_encode("put ".$data ,JSON_UNESCAPED_UNICODE);
+        
+
+
+        echo json_encode("put ".$data['idRole'].$data['username'].$data['fullname'] ,JSON_UNESCAPED_UNICODE);
+
+
     }
 
     function deleteMethod(){
