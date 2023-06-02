@@ -53,7 +53,7 @@ function getProduct(){
     include'library/cors.php';
     include'library/connect.php';
 
-    $query="select * from Product "; 
+    $query="select * from Product where idStatusProduct=1"; 
 
     $result=mysqli_query($connect,$query);
     $array=array();
