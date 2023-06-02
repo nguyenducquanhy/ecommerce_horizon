@@ -39,19 +39,16 @@ function insertProduct(){
 }
 
 function updateProduct(){
-    $idCategoryInput =$_POST['idCategoryInput'];
-    $IDTradeMarkInput =$_POST['IDTradeMarkInput'];
+    $json = file_get_contents('php://input');
+    $data = json_decode($json,true);
+    echo json_encode("put ".$data ,JSON_UNESCAPED_UNICODE);
 
-    echo $idCategoryInput;
-    echo $IDTradeMarkInput;
 }
 
 function hideProduct(){
-    $idCategoryInput =$_POST['idCategoryInput'];
-    $IDTradeMarkInput =$_POST['IDTradeMarkInput'];
-
-    echo $idCategoryInput;
-    echo $IDTradeMarkInput;
+    $json = file_get_contents('php://input');
+    $data = json_decode($json,true);
+    echo json_encode("put ".$data ,JSON_UNESCAPED_UNICODE);
 }
 
 
