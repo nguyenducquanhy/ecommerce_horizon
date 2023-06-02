@@ -39,7 +39,7 @@ function getDetailConfigurationById(){
     $query="call getDetailConfigurationById('$idProduct')";
 
     $result=mysqli_query($connect,$query);
-
+    $array=array();
     if($result){   
         while($row=mysqli_fetch_array($result)){           
             $newProduct=new DetailConfiguration($row['ID'],$row['idProduct'], $row['content']);
