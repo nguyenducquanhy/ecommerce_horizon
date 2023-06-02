@@ -41,9 +41,9 @@ function getDetailConfigurationById(){
     $result=mysqli_query($connect,$query);    
     if($result){   
         $row=mysqli_fetch_array($result);   
-        if($row['status']){
+        if($row['result']==404){
             $arr=Array(
-                "status" => $row['status']
+                "status" => $row['result']
             );
             echo json_encode($arr );
         }
