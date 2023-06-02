@@ -1,22 +1,59 @@
 <?php
-include'library/cors.php';
+//include'library/cors.php';
 include'library/connect.php';
 
 
 if($_SERVER['REQUEST_METHOD']==='GET'){
-    getMethod();
+    getProduct();
 }
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
-    postMethod();
+    insertProduct();
 }
 
 if($_SERVER['REQUEST_METHOD']==='PUT'){
-    putMethod();
+    updateProduct();
 }
 
 if($_SERVER['REQUEST_METHOD']==='DELETE'){
-    deleteMethod();
+    hideProduct();
 }
+
+
+function getProduct(){
+
+}
+
+function insertProduct(){
+    $idCategoryInput =$_POST['idCategoryInput'];
+    $IDTradeMarkInput =$_POST['IDTradeMarkInput'];
+    // $IdSpecificationsInput =$_POST['IdSpecificationsInput'];
+    // $NameInput =$_POST['NameInput'];
+    // $SlugInput =$_POST['SlugInput'];
+    // $CurrentPriceInput =$_POST['CurrentPriceInput'];
+
+    echo $idCategoryInput;
+    echo $IDTradeMarkInput;
+
+    
+}
+
+function updateProduct(){
+    $idCategoryInput =$_POST['idCategoryInput'];
+    $IDTradeMarkInput =$_POST['IDTradeMarkInput'];
+
+    echo $idCategoryInput;
+    echo $IDTradeMarkInput;
+}
+
+function hideProduct(){
+    $idCategoryInput =$_POST['idCategoryInput'];
+    $IDTradeMarkInput =$_POST['IDTradeMarkInput'];
+
+    echo $idCategoryInput;
+    echo $IDTradeMarkInput;
+}
+
+
 
 ?>
