@@ -1,5 +1,37 @@
 <?php
 
+class product{
+    public $idProduct ;
+
+    public $idCategory ;
+    public $IDTradeMark;
+    public $IdSpecifications;
+    public $Name;
+    public $Slug;
+    public $CurrentPrice;
+    public $OldPrice ;
+    public $dateDiscount;
+
+    public function __construct ($idProduct,$idCategory,$IDTradeMark,
+                                $IdSpecifications,$Name,$Slug,
+                                $CurrentPrice,$OldPrice,$dateDiscount){
+                                    
+        $this ->idProduct = $idProduct;
+        $this ->idCategory = $idCategory;
+        $this ->IDTradeMark = $IDTradeMark;
+        $this ->IdSpecifications = $IdSpecifications;
+        $this ->Name = $Name;
+        $this ->Slug = $Slug;
+        $this ->CurrentPrice = $CurrentPrice;
+        $this ->OldPrice = $OldPrice;
+        $this ->dateDiscount = $dateDiscount;
+    }
+
+
+
+}
+
+
 if($_SERVER['REQUEST_METHOD']==='GET'){
     getProduct();
 }
@@ -20,6 +52,35 @@ if($_SERVER['REQUEST_METHOD']==='DELETE'){
 function getProduct(){
     include'library/cors.php';
     include'library/connect.php';
+
+    $query="select * from Product "; 
+
+    $result=mysqli_query($connect,$query);
+    $array=array();
+    
+    if($result){       
+        
+        while($row=mysqli_fetch_array($result)){           
+            $newProduct=new product(
+                $row['Id'],$row['idCategory'], $row['IDTradeMark'],
+                $row['IdSpecifications'],$row['Name'],$row['Slug'],
+                $row['CurrentPrice'],$row['OldPrice'],$row['dateDiscount']);
+            array_push($array,$newProduct);            
+        }
+
+        
+     echo json_encode($array,JSON_UNESCAPED_UNICODE );
+
+    }
+    else{
+        $arr=Array(
+            "status" => 504
+        );
+        echo json_encode($arr );
+    }
+
+
+
 }
 
 function insertProduct(){
