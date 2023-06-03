@@ -41,11 +41,8 @@ function getDetailConfigurationById(){
     $result=mysqli_query($connect,$query);    
     if($result){   
         $row=mysqli_fetch_array($result);   
-        if($row['result']==404){
-            $arr=Array(
-                "status" => $row['result']
-            );
-            echo json_encode($arr );
+        if($row['result']==404){            
+            echo $row['result'];
         }
         else{
             $newProduct;         
@@ -55,11 +52,8 @@ function getDetailConfigurationById(){
         }
         
     }
-    else{
-        $arr=Array(
-            "status" => 504
-        );
-        echo json_encode($arr );
+    else{        
+        echo 504;
     }
 }
 
@@ -75,17 +69,11 @@ function insertDetailConfigurationById(){
     $result=mysqli_query($connect,$query);
 
     if($result){
-        $row=mysqli_fetch_array($result);   
-        $arr=Array(
-            "status" => $row['result']
-        );      
-        echo json_encode($arr );
+        $row=mysqli_fetch_array($result);                
+        echo $row['result'];
     }
-    else{  
-        $arr=Array(
-            "status" => 504
-        );
-        echo json_encode($arr );
+    else{          
+        echo 504;
     }
 }
 
@@ -103,17 +91,11 @@ function updateDetailConfigurationById(){
     $result=mysqli_query($connect,$query);
 
     if($result){
-        $row=mysqli_fetch_array($result);   
-        $arr=Array(
-            "status" => $row['result']
-        );      
-        echo json_encode($arr );
+        $row=mysqli_fetch_array($result);                
+        echo $row['result'];
     }
-    else{  
-        $arr=Array(
-            "status" => 504
-        );
-        echo json_encode($arr );
+    else{          
+        echo 504;
     }
 
 
@@ -132,17 +114,11 @@ function removeDetailConfigurationById(){
     $result=mysqli_query($connect,$query);
 
     if($result){
-        $row=mysqli_fetch_array($result);   
-        $arr=Array(
-            "status" => $row['result']
-        );      
-        echo json_encode($arr );
+        $row=mysqli_fetch_array($result);                
+        echo $row['result'];
     }
-    else{  
-        $arr=Array(
-            "status" => 504
-        );
-        echo json_encode($arr );
+    else{          
+        echo 504;
     }
 
 }

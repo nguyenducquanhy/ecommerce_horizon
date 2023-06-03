@@ -17,12 +17,13 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                     '$IdSCREENInput','$IdCOLORInput','$IdOSInput')";
                     
     $result=mysqli_query($connect,$query);
-
-    if($result){
+    
+    if($result){        
+        $row=mysqli_fetch_array($result);        
         
-        $row=mysqli_fetch_array($result);
-        
-        echo $row['idSpecification'];
+        echo Array(
+            "idSpecification"=>$row['idSpecification']
+        );
           
     }
     else{

@@ -38,8 +38,6 @@ class product{
     $IDTradeMarkInput =$_POST['IDTradeMarkInput'];    
     $idStatusProduct =$_POST['idStatusProduct'];
 
-  
-
     $query="select *from Product where ";
 
     $count=0;
@@ -82,11 +80,8 @@ class product{
                 $row['CurrentPrice'],$row['OldPrice'],$row['dateDiscount']);
             array_push($array,$newProduct);            
         }
-        if(sizeof($array)==0){
-            $arr=Array(
-                "status" => 204 
-            );
-            echo json_encode($arr );
+        if(sizeof($array)==0){            
+            echo 204;
         }
         else{
             echo json_encode($array,JSON_UNESCAPED_UNICODE );
@@ -95,10 +90,8 @@ class product{
      
     }
     else{  
-        $arr=Array(
-            "status" => 504
-        );
-        echo json_encode($arr );
+        
+        echo 504;
     }
 
 ?>

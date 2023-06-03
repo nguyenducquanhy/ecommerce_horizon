@@ -73,10 +73,8 @@ function getProduct(){
 
     }
     else{
-        $arr=Array(
-            "status" => 504
-        );
-        echo json_encode($arr );
+        
+        echo 504;
     }
 
 
@@ -104,16 +102,12 @@ function insertProduct(){
 
     if($result){
         $row=mysqli_fetch_array($result);   
-        $arr=Array(
-            "status" => $row['result']
-        );      
-        echo json_encode($arr );
+              
+        echo $row['result'];
     }
     else{  
-        $arr=Array(
-            "status" => 504
-        );
-        echo json_encode($arr );
+        
+        echo 504;
     }
     
 }
@@ -214,16 +208,12 @@ function updateProduct(){
     $result=mysqli_query($connect,$query);
 
     if($result){
-        $arr=Array(
-            "status" => 200
-        );
-        echo json_encode($arr );
+        
+        echo 200;
     }
     else{  
-        $arr=Array(
-            "status" => 504
-        );
-        echo json_encode($arr );
+        
+        echo 504;
     }
 
 
@@ -245,16 +235,12 @@ function hideProduct(){
     $result=mysqli_query($connect,$query);
 
     if($result){
-        $arr=Array(
-            "status" => 200
-        );
-        echo json_encode($arr );
+        
+        echo 200;
     }
     else{  
-        $arr=Array(
-            "status" => 504
-        );
-        echo json_encode($arr );
+        
+        echo 504;
     }
 
 }
