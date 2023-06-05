@@ -3,28 +3,30 @@
 class product{
     public $idProduct ;
 
-    public $idCategory ;
-    public $IDTradeMark;
+    public $Category ;
+    public $TradeMark;
     public $IdSpecifications;
     public $Name;
     public $Slug;
     public $CurrentPrice;
     public $OldPrice ;
     public $dateDiscount;
+    public $image;
 
-    public function __construct ($idProduct,$idCategory,$IDTradeMark,
+    public function __construct ($idProduct,$Category,$TradeMark,
                                 $IdSpecifications,$Name,$Slug,
-                                $CurrentPrice,$OldPrice,$dateDiscount){
+                                $CurrentPrice,$OldPrice,$dateDiscount,$image){
                                     
         $this ->idProduct = $idProduct;
-        $this ->idCategory = $idCategory;
-        $this ->IDTradeMark = $IDTradeMark;
+        $this ->Category = $Category;
+        $this ->TradeMark = $TradeMark;
         $this ->IdSpecifications = $IdSpecifications;
         $this ->Name = $Name;
         $this ->Slug = $Slug;
         $this ->CurrentPrice = $CurrentPrice;
         $this ->OldPrice = $OldPrice;
         $this ->dateDiscount = $dateDiscount;
+        $this->image=$image;
     }
 
 
@@ -53,7 +55,7 @@ function getProduct(){
     include'library/cors.php';
     include'library/connect.php';
 
-    $query="select * from Product where idStatusProduct=1"; 
+    $query="call getAllProduct()"; 
 
     $result=mysqli_query($connect,$query);
     $array=array();
@@ -62,9 +64,9 @@ function getProduct(){
         
         while($row=mysqli_fetch_array($result)){           
             $newProduct=new product(
-                $row['Id'],$row['idCategory'], $row['IDTradeMark'],
+                $row['Id'],$row['Category'], $row['TradeMark'],
                 $row['IdSpecifications'],$row['Name'],$row['Slug'],
-                $row['CurrentPrice'],$row['OldPrice'],$row['dateDiscount']);
+                $row['CurrentPrice'],$row['OldPrice'],$row['dateDiscount'],$row["image"]);
             array_push($array,$newProduct);            
         }
 
