@@ -51,6 +51,21 @@ class Specifications{
 
 }
 
+class pagination{
+    public $_page;
+    public $_limit;
+    public $_totalRows;
+
+    public function __construct ($_page, $_limit, $_totalRows){
+        $this->_page=$_page;
+        $this->_limit=$_limit;
+        $this->_totalRows=$_totalRows;
+    }
+
+
+
+}
+
 
 if($_SERVER['REQUEST_METHOD']==='GET'){
     getProduct();
@@ -74,23 +89,30 @@ function getProduct(){
     include'library/connect.php';
 
     $keyWord=$_GET["keyWord"];   
-    
+    $curentPage =$_GET["page"];   
+    $limitLoad =$_GET["limit"];   
+
+
     $query; 
 
     if(isset($keyWord)){
       
-        $query="call searchingProduct('%$keyWord%')";
-        
+        $query="call searchingProduct('%$keyWord%','$curentPage','$limitLoad')";
+        $queryCount="call countingSearchingProduct('%$keyWord%','$curentPage','$limitLoad')";
     }
     else{
-        $query="call getAllProduct()";
+        $query="call getAllProduct('$curentPage','$limitLoad');";
+        $queryCount="";
+    }
+
+    if(empty($queryCount)){
+        echo "queryCount".$queryCount;
     }
 
     $result=mysqli_query($connect,$query);
-    $array=array();
+    $arrayProduct=array();
     
-    if($result){       
-        
+    if($result){               
         while($row=mysqli_fetch_array($result)){       
             
             $Specifications=new Specifications($row['CpuName'],$row['RamName'],$row['DiskName'],$row['VgaName'],
@@ -100,10 +122,10 @@ function getProduct(){
                 $row['Id'],$row['Category'], $row['TradeMark'],
                 $Specifications,$row['Name'],$row['Slug'],
                 $row['CurrentPrice'],$row["image"]);
-            array_push($array,$newProduct); 
+            array_push($arrayProduct,$newProduct); 
         }
         
-     echo json_encode($array,JSON_UNESCAPED_UNICODE );
+     echo json_encode($arrayProduct,JSON_UNESCAPED_UNICODE );
 
     }
     else{        
