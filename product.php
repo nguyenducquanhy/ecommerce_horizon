@@ -91,30 +91,29 @@ function getProduct(){
     $keyWord=$_GET["keyWord"];   
     $curentPage =$_GET["page"];   
     $limitLoad =$_GET["limit"];   
+    $idStatusProductInput =$_GET["idStatusProductInput"];  
 
-
-    $query; 
-
-    if(isset($keyWord)){
-      
-        $query="call searchingProduct('%$keyWord%','$curentPage','$limitLoad')";
-        $queryCount="call countingSearchingProduct('%$keyWord%','$curentPage','$limitLoad')";
+    $query=""; 
+    $query1="";
+    if(isset($keyWord)){      
+        $query="call searchingProduct('%$keyWord%','$curentPage','$limitLoad','$idStatusProductInput')";
+        $query1 ="call countingSearchingProduct('%$keyWord%','$curentPage','$limitLoad','$idStatusProductInput')";
     }
-    else{
-        $query="call getAllProduct('$curentPage','$limitLoad');";
-        $queryCount="";
+    else{        
+        $query="Call getAllProduct('$curentPage','$limitLoad','$idStatusProductInput');";
+        $query1="Call getCountAllProduct('$curentPage','$limitLoad','$idStatusProductInput')";    
     }
-
-    if(empty($queryCount)){
-        echo "queryCount".$queryCount;
-    }
-
-    $result=mysqli_query($connect,$query);
-    $arrayProduct=array();
     
-    if($result){               
-        while($row=mysqli_fetch_array($result)){       
-            
+    $resultProducts=mysqli_query($connect,$query)or die(mysqli_error($connect));
+    while(mysqli_next_result($connect)){;}
+
+    $resultPaginationProduct=mysqli_query($connect,$query1)or die(mysqli_error($connect));
+    while(mysqli_next_result($connect)){;}
+
+    $arrayProduct=array();
+    if($resultProducts && $resultPaginationProduct){      
+        while($row=$resultProducts->fetch_assoc()){       
+                
             $Specifications=new Specifications($row['CpuName'],$row['RamName'],$row['DiskName'],$row['VgaName'],
             $row['ScreenName'],$row['ColorName'],$row['OsName']);
 
@@ -122,18 +121,20 @@ function getProduct(){
                 $row['Id'],$row['Category'], $row['TradeMark'],
                 $Specifications,$row['Name'],$row['Slug'],
                 $row['CurrentPrice'],$row["image"]);
-            array_push($arrayProduct,$newProduct); 
-        }
-        
-     echo json_encode($arrayProduct,JSON_UNESCAPED_UNICODE );
+            array_push($arrayProduct,$newProduct);
+        }  
 
+
+        $row=mysqli_fetch_assoc($resultPaginationProduct);  
+        $newCountingProduct=new pagination($row['_page'],$row['_limit'], $row['_totalRows']); 
+           
+        echo json_encode(
+            Array("data"=>$arrayProduct,
+            "pagination"=>$newCountingProduct),JSON_UNESCAPED_UNICODE );
     }
-    else{        
+    else{
         echo 504;
-    }
-
-
-
+    }    
 }
 
 function insertProduct(){
