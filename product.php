@@ -91,7 +91,9 @@ function getProduct(){
     $curentPage =$_GET["page"];   
     $limitLoad =$_GET["limit"];   
     $idStatusProductInput =$_GET["idStatusProductInput"];  
-    
+
+    $idProduct=$_GET["idProduct"];
+
     $keyWord=$_GET["keyWord"]; 
     $nameCategoryInput =$_GET["nameCategoryInput"]; 
     $nameCpuInput =$_GET["nameCpuInput"]; 
@@ -100,8 +102,35 @@ function getProduct(){
     $nameVgaInput =$_GET["nameVgaInput"]; 
     $nameScreenInput =$_GET["nameScreenInput"]; 
     $nameColorInput =$_GET["nameColorInput"]; 
-    $nameOsInput=$_GET["nameOsInput"];                 
+    $nameOsInput=$_GET["nameOsInput"];
 
+    if(isset($idProduct)){
+
+            $queryGetDetailProductById ="call getDetailProductById('$idProduct')";
+
+            $resultGetDetailProductById=mysqli_query($connect,$queryGetDetailProductById)or die(mysqli_error($connect));
+
+            if($resultGetDetailProductById){      
+                $row=$resultGetDetailProductById->fetch_array();
+                        
+                    $Specifications=new Specifications($row['CpuName'],$row['RamName'],$row['DiskName'],$row['VgaName'],
+                    $row['ScreenName'],$row['ColorName'],$row['OsName']);
+
+                    $DetailProduct=new product(
+                        $row['Id'],$row['Category'], $row['TradeMark'],
+                        $Specifications,$row['Name'],$row['Slug'],
+                        $row['CurrentPrice'],$row["image"]);
+                
+                
+                echo json_encode( $DetailProduct,JSON_UNESCAPED_UNICODE);
+                return;
+            }
+            else{
+                echo mysqli_error($connect). 504;
+                return;
+            } 
+
+    }
 
     $queryProducts=""; 
     $queryCountProducts="";
@@ -166,7 +195,7 @@ function concatQuerySearchProducts($keyWord,$curentPage,$limitLoad,$idStatusProd
     $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput );
     $lastNote=($curentPage-1)*$limitLoad;
 
-    $sql="select Product.id           as Id,
+    $sql="select Product.id      as Id,
             Product.Name         as Name,
             Product.Slug         as Slug,
             Product.CurrentPrice as CurrentPrice,
