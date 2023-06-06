@@ -73,7 +73,18 @@ function getProduct(){
     include'library/cors.php';
     include'library/connect.php';
 
-    $query="call getAllProduct()"; 
+    $keyWord=$_GET["keyWord"];   
+    
+    $query; 
+
+    if(isset($keyWord)){
+      
+        $query="call searchingProduct('%$keyWord%')";
+        
+    }
+    else{
+        $query="call getAllProduct()";
+    }
 
     $result=mysqli_query($connect,$query);
     $array=array();
