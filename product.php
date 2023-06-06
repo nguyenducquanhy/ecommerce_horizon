@@ -2,34 +2,52 @@
 
 class product{
     public $idProduct ;
-
     public $Category ;
-    public $TradeMark;
-    public $IdSpecifications;
-    public $Name;
+    public $TradeMark;    
+    public $NameProduct;
     public $Slug;
-    public $CurrentPrice;
-    public $OldPrice ;
-    public $dateDiscount;
+    public $CurrentPrice; 
     public $image;
+    public $Specifications;
 
     public function __construct ($idProduct,$Category,$TradeMark,
-                                $IdSpecifications,$Name,$Slug,
-                                $CurrentPrice,$OldPrice,$dateDiscount,$image){
+                                $Specifications,$Name,$Slug,
+                                $CurrentPrice,$image){
                                     
         $this ->idProduct = $idProduct;
         $this ->Category = $Category;
         $this ->TradeMark = $TradeMark;
-        $this ->IdSpecifications = $IdSpecifications;
-        $this ->Name = $Name;
+        $this ->Specifications = $Specifications;
+        $this ->NameProduct = $Name;
         $this ->Slug = $Slug;
         $this ->CurrentPrice = $CurrentPrice;
-        $this ->OldPrice = $OldPrice;
-        $this ->dateDiscount = $dateDiscount;
         $this->image=$image;
     }
 
 
+
+}
+class Specifications{
+
+    public $CpuName;
+    public $RamName;
+    public $DiskName;
+    public $VgaName;
+    public $ScreenName;
+    public $ColorName;
+    public $OsName;
+    
+    public function __construct ($CpuName, $RamName, $DiskName, $VgaName, 
+                                $ScreenName, $ColorName, $OsName){
+
+        $this ->CpuName = $CpuName;
+        $this ->RamName = $RamName;
+        $this ->DiskName = $DiskName;
+        $this ->VgaName = $VgaName;
+        $this ->ScreenName = $ScreenName;
+        $this ->ColorName = $ColorName;
+        $this ->OsName = $OsName;     
+    }
 
 }
 
@@ -62,20 +80,22 @@ function getProduct(){
     
     if($result){       
         
-        while($row=mysqli_fetch_array($result)){           
+        while($row=mysqli_fetch_array($result)){       
+            
+            $Specifications=new Specifications($row['CpuName'],$row['RamName'],$row['DiskName'],$row['VgaName'],
+            $row['ScreenName'],$row['ColorName'],$row['OsName']);
+
             $newProduct=new product(
                 $row['Id'],$row['Category'], $row['TradeMark'],
-                $row['IdSpecifications'],$row['Name'],$row['Slug'],
-                $row['CurrentPrice'],$row['OldPrice'],$row['dateDiscount'],$row["image"]);
-            array_push($array,$newProduct);            
+                $Specifications,$row['Name'],$row['Slug'],
+                $row['CurrentPrice'],$row["image"]);
+            array_push($array,$newProduct); 
         }
-
         
      echo json_encode($array,JSON_UNESCAPED_UNICODE );
 
     }
-    else{
-        
+    else{        
         echo 504;
     }
 
@@ -96,9 +116,10 @@ function insertProduct(){
     $NameInput =$data['NameInput'];
     $SlugInput =$data['SlugInput'];
     $CurrentPriceInput =$data['CurrentPriceInput'];
+    $UrlImageProductInput=$data['UrlImageProductInput'];
 
     $query="call insertProduct('$idCategoryInput', '$IDTradeMarkInput', '$IdSpecificationsInput',
-    '$NameInput', '$SlugInput', '$CurrentPriceInput')";
+    '$NameInput', '$SlugInput', '$CurrentPriceInput','$UrlImageProductInput')";
 
     $result=mysqli_query($connect,$query);
 
@@ -130,7 +151,7 @@ function updateProduct(){
     $CurrentPriceInput =$data['CurrentPriceInput'];
     $OldPriceInput =$data['OldPriceInput'];
     $dateDiscountInput =$data['dateDiscountInput'];
-
+    $urlImageProductInput=$data['urlImageProductInput'];
     $query="update Product SET ";
 
     $count=0;
@@ -203,6 +224,16 @@ function updateProduct(){
         $query=$query." dateDiscount='$dateDiscountInput'";
     }
 
+    if($dateDiscountInput!=-1){
+        if($count==1){
+            $query=$query.",";
+        }else{
+            $count=1;
+        }
+        $query=$query." Product.image='$urlImageProductInput'";
+    }
+
+
     $query=$query." where Id= $idProduct";
     
     // echo $query;
@@ -236,8 +267,7 @@ function hideProduct(){
 
     $result=mysqli_query($connect,$query);
 
-    if($result){
-        
+    if($result){        
         echo 200;
     }
     else{  
