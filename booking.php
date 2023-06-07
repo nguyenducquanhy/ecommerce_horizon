@@ -1,16 +1,16 @@
 <?php
 class booking{
     public $ID;
-    public $nameStatusBooking;
+    public $nameStatus;
     public $nameOfBuyer;
-    public $dateAccept;
+    public $dateBooking;
     public $TotalMoneyBill;
 
-    public function __construct( $ID, $nameStatusBooking,$nameOfBuyer,$dateAccept,$TotalMoneyBill){
+    public function __construct( $ID, $nameStatus,$nameOfBuyer,$dateBooking,$TotalMoneyBill){
         $this->ID=$ID;
-        $this->nameStatusBooking=$nameStatusBooking;
+        $this->nameStatus=$nameStatus;
         $this->nameOfBuyer=$nameOfBuyer;
-        $this->dateAccept=$dateAccept;
+        $this->dateBooking=$dateBooking;
         $this->TotalMoneyBill=$TotalMoneyBill;       
      }
 
@@ -41,7 +41,7 @@ function  getBooking(){
     include'library/cors.php';
     include'library/connect.php';
 
-    $query="select Booking.ID,sB.nameStatus,nameOfBuyer,dateBooking,TotalMoneyBill
+    $query="select Booking.ID,sB.nameStatus,nameOfBuyer,Booking.dateBooking,TotalMoneyBill
     from Booking join statusBooking sB on sB.ID = Booking.idStatusBooking;";
 
     $result=mysqli_query($connect,$query);
@@ -50,7 +50,7 @@ function  getBooking(){
 
     if($result){      
         while($row=$result->fetch_assoc()){       
-            $newBooking=new booking($row['ID'], $row['nameStatusBooking'],$row['nameOfBuyer'],$row['dateAccept'],$row['TotalMoneyBill']);
+            $newBooking=new booking($row['ID'], $row['nameStatus'],$row['nameOfBuyer'],$row['dateBooking'],$row['TotalMoneyBill']);
             array_push($arrayBooking,$newBooking);
         }
 
