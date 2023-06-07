@@ -18,7 +18,6 @@ include'library/connect.php';
     $json = file_get_contents('php://input');
     $data = json_decode($json,true);
     $array=array();
-
     
     for ($i=0; $i < sizeof($data); $i++) {
 
