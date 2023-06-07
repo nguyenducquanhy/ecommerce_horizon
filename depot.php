@@ -15,6 +15,20 @@ class depot{
         $this->upcomingGoods=$upcomingGoods;
     }
 }
+  
+class pagination{
+    public $_page;
+    public $_limit;
+    public $_totalRows;
+
+    public function __construct ($_page, $_limit, $_totalRows){
+        $this->_page=$_page;
+        $this->_limit=$_limit;
+        $this->_totalRows=$_totalRows;
+    }
+
+}
+
 
 
 if($_SERVER['REQUEST_METHOD']==='GET'){
@@ -38,13 +52,13 @@ function getDepot(){
     $limitLoad =$_GET["limit"];   
 
     $queryDepot="Call getDepots('$curentPage','$limitLoad');";
-    $queryDepot="Call getCountingDepots('$curentPage','$limitLoad')";
+    $queryCountingDepot="Call getCountingDepots('$curentPage','$limitLoad')";
 
     
     $resultDepot=mysqli_query($connect,$queryDepot)or die(mysqli_error($connect));
     while(mysqli_next_result($connect)){;}
 
-    $resultPaginationDepot=mysqli_query($connect,$queryDepot)or die(mysqli_error($connect));
+    $resultPaginationDepot=mysqli_query($connect,$queryCountingDepot)or die(mysqli_error($connect));
     while(mysqli_next_result($connect)){;}
 
     $arrayDepot=array();
@@ -65,13 +79,29 @@ function getDepot(){
         echo 504;
     }    
 
-
-
-}
+ }
 
 function insertDepot(){
     include'library/cors.php';
     include'library/connect.php';
+
+    $json = file_get_contents('php://input');
+    $data = json_decode($json,true);
+
+    $idProduct =$data['idProduct'];
+    $quantily =$data['quantily'];
+    
+    $query="insert into Depot(idPRoduct, quantily, da_co, upcomingGoods) value($idProduct, $quantily,0,null);";
+
+    $result=mysqli_query($connect,$query);
+
+    if($result){
+        echo 200;
+    }
+    else{          
+        echo 504;
+    }
+
 
 
 }
@@ -79,6 +109,8 @@ function insertDepot(){
 function updateDepot(){
     include'library/cors.php';
     include'library/connect.php';
+
+    
 
 
 }

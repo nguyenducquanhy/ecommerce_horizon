@@ -11,20 +11,45 @@
         }
     }
 
-    include'library/cors.php';
-    include'library/connect.php';
-    
-    $query="select * from Ram where isActive=1";
-    $result=mysqli_query($connect,$query);
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: *");
+        
+    if($_SERVER['REQUEST_METHOD']==='GET'){
+        get();
+    }
 
-    if($result){
-        $array=array();
-        while($row=mysqli_fetch_array($result)){
-            array_push($array,new Ram($row["ID"],$row["idCategory"],$row["name"]));
-        }        
-        echo json_encode($array,JSON_UNESCAPED_UNICODE );
+    function get(){
+        include'library/cors.php';
+        include'library/connect.php';
+
+        $keyWord=$_GET['keyWord'];
+        if(isset($keyWord)){
+            
+            $query="select *from Ram where name like '%$keyWord%'";
+            $result=mysqli_query($connect,$query);
+            convertMysqlResultToArray($result);
+            return;
+        }
+    
+        $query="select * from Ram where isActive=1";
+        $result=mysqli_query($connect,$query);
+        convertMysqlResultToArray($result);
+
     }
-    else{
-        echo 504;
+    function convertMysqlResultToArray($result){
+        if($result){
+            $array=array();
+            while($row=mysqli_fetch_array($result)){
+                array_push($array,new Ram($row["ID"],$row["idCategory"],$row["name"]));
+            }        
+            echo json_encode($array,JSON_UNESCAPED_UNICODE );
+        }
+        else{
+            echo 504;
+        }
     }
+    
+   
+
+    
 ?>

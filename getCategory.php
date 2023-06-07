@@ -1,16 +1,20 @@
-<?php
-    class OS{
-        public $ID;
-        public $idCategory;
-        public $name;
 
-        public function __construct($ID,$idCategory,$name){
-            $this->ID=$ID;
-            $this->idCategory=$idCategory;
-            $this->name=$name;
+<?php
+
+    class Category{
+        public $ID;
+        public $name;  
+        public $slug;
+        
+        public function __construct( $ID,$name,$slug)
+        {
+            $this->ID = $ID;
+            $this->name = $name;
+            $this->slug=$slug;
+    
         }
     }
-
+    
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Headers: *");
         
@@ -25,24 +29,27 @@
         $keyWord=$_GET['keyWord'];
         if(isset($keyWord)){
             
-            $query="select *from OS where name like '%$keyWord%' and isActive=1";
+            $query="select *from Category where name like '%$keyWord%' and isActive=1";
             $result=mysqli_query($connect,$query);
             convertMysqlResultToArray($result);
             return;
         }
     
-        $query="select * from OS where isActive=1";
+        $query="select * from Category where isActive = 1"; 
         $result=mysqli_query($connect,$query);
         convertMysqlResultToArray($result);
 
     }
+
     function convertMysqlResultToArray($result){
-        if($result){
-            $array=array();
+        $array=array();
+    
+        if($result){       
             while($row=mysqli_fetch_array($result)){
-                array_push($array,new OS($row["ID"],$row["idCategory"],$row["name"]));
-            }        
-            echo json_encode($array,JSON_UNESCAPED_UNICODE );
+                array_push($array,new Category($row['ID'],$row['name'], $row['slug']));            
+            }
+
+        echo json_encode($array,JSON_UNESCAPED_UNICODE );
         }
         else{
             echo 504;
@@ -50,6 +57,8 @@
     }
     
     
-
     
+
+
 ?>
+

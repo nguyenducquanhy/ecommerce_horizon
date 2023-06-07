@@ -10,21 +10,43 @@
             $this->name=$name;
         }
     }
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: *");
+        
+    if($_SERVER['REQUEST_METHOD']==='GET'){
+        get();
+    }
 
-    include'library/cors.php';
-    include'library/connect.php';
+    function get(){
+        include'library/cors.php';
+        include'library/connect.php';
+
+        $keyWord=$_GET['keyWord'];
+        if(isset($keyWord)){
+            
+            $query="select *from Cpu where name like '%$keyWord%' and isActive=1";
+            $result=mysqli_query($connect,$query);
+            convertMysqlResultToArray($result);
+            return;
+        }
     
-    $query="select * from Cpu where isActive=1";
-    $result=mysqli_query($connect,$query);
+        $query="select * from Cpu where isActive=1";
+        $result=mysqli_query($connect,$query);
+        convertMysqlResultToArray($result);
 
-    if($result){
-        $array=array();
-        while($row=mysqli_fetch_array($result)){
-            array_push($array,new Cpu($row["ID"],$row["idCategory"],$row["name"]));
-        }        
-        echo json_encode($array,JSON_UNESCAPED_UNICODE );
     }
-    else{
-        echo 504;
+
+    function convertMysqlResultToArray($result){
+        if($result){
+            $array=array();
+            while($row=mysqli_fetch_array($result)){
+                array_push($array,new Cpu($row["ID"],$row["idCategory"],$row["name"]));
+            }        
+            echo json_encode($array,JSON_UNESCAPED_UNICODE );
+        }
+        else{
+            echo 504;
+        }
     }
+    
 ?>
