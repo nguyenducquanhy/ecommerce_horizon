@@ -47,14 +47,14 @@ function  getBooking(){
     $result=mysqli_query($connect,$query);
 
     $arrayBooking=array();
-    
+
     if($result){      
         while($row=$result->fetch_assoc()){       
             $newBooking=new booking($row['ID'], $row['nameStatusBooking'],$row['nameOfBuyer'],$row['dateAccept'],$row['TotalMoneyBill']);
             array_push($arrayBooking,$newBooking);
         }
 
-        echo json_encode($arrayProduct,JSON_UNESCAPED_UNICODE );
+        echo json_encode($arrayBooking,JSON_UNESCAPED_UNICODE );
     }
     else{
         echo 504;
