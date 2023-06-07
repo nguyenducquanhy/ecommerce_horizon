@@ -59,8 +59,10 @@ function getFeedback(){
                 RFB.reactionLike ReactionRepplyFeedback from FeedBack
                 join ReplyFeedBack RFB on FeedBack.ID = RFB.IdFeedBack where idProduct=$idProduct;";
 
-    $query2="select FeedBack.ID idFeedback,FeedBack.rate,FeedBack.content contentFeedBack 
-                ,email,FeedBack.reactionLike reactionFeedback from FeedBack where idProduct=$idProduct";
+    $query2="select FeedBack.ID idFeedback,FeedBack.rate,FeedBack.content contentFeedBack
+            ,email,FeedBack.reactionLike reactionFeedback from FeedBack where idProduct=1
+            and FeedBack.ID not IN (select FeedBack.ID from FeedBack
+            join ReplyFeedBack RFB on FeedBack.ID = RFB.IdFeedBack where idProduct=$idProduct);";
 
     $result1=mysqli_query($connect,$query1);
     while(mysqli_next_result($connect)){;}
