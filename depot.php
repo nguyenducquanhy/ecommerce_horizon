@@ -15,6 +15,8 @@ class depot{
         $this->upcomingGoods=$upcomingGoods;
     }
 }
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
   
 class pagination{
     public $_page;
@@ -91,31 +93,55 @@ function insertDepot(){
     $idProduct =$data['idProduct'];
     $quantily =$data['quantily'];
     
-    $query="insert into Depot(idPRoduct, quantily, da_co, upcomingGoods) value($idProduct, $quantily,0,null);";
+    $query="call insertDepot('$idProduct','$quantily');";
 
     $result=mysqli_query($connect,$query);
 
     if($result){
-        echo 200;
+        $row=mysqli_fetch_assoc($result);                 
+        echo $row['result'];
     }
     else{          
         echo 504;
     }
-
-
-
 }
 
 function updateDepot(){
     include'library/cors.php';
     include'library/connect.php';
 
-    
+    $json = file_get_contents('php://input');
+    $data = json_decode($json,true);
 
+    $idProduct =$data['idProduct'];
 
+    $quantilyInput =$data['quantilyInput'];
+    $upcomingGoodsInput =$data['upcomingGoods'];
+
+    $query="update Depot SET ";
+    $count=0;    
+    if(isset($quantilyInput)){       
+        $count=1;
+        $query=$query."quantily='$quantilyInput'";
+    }
+
+    if(isset($upcomingGoodsInput)){
+        if($count==1){
+            $query=$query.",";
+        }else{
+            $count=1;
+        }
+        $query=$query."upcomingGoods='$upcomingGoodsInput'";
+    }
+
+    $query=$query." where idPRoduct= $idProduct";
+
+    $result=mysqli_query($connect,$query);
+    if($result){        
+        echo 200;
+    }
+    else{          
+        echo 504;
+    }
 }
-
-
-
-
 ?>

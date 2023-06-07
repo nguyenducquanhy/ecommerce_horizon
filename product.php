@@ -92,7 +92,7 @@ function getProduct(){
     $limitLoad =$_GET["limit"];   
     $idStatusProductInput =$_GET["idStatusProductInput"];  
 
-    $idProduct=$_GET["idProduct"];
+    $slug=$_GET["slug"];
 
     $keyWord=$_GET["keyWord"]; 
     $nameCategoryInput =$_GET["nameCategoryInput"]; 
@@ -104,9 +104,9 @@ function getProduct(){
     $nameColorInput =$_GET["nameColorInput"]; 
     $nameOsInput=$_GET["nameOsInput"];
 
-    if(isset($idProduct)){
+    if(isset($slug)){
 
-            $queryGetDetailProductById ="call getDetailProductById('$idProduct')";
+            $queryGetDetailProductById ="call getDetailProductBySlug('$slug')";
 
             $resultGetDetailProductById=mysqli_query($connect,$queryGetDetailProductById)or die(mysqli_error($connect));
 
@@ -361,7 +361,14 @@ function insertProduct(){
     if($result){
         $row=mysqli_fetch_array($result);   
               
-        echo $row['result'];
+        if($row['result']==200){
+
+
+            echo $row['idProduct'];
+        }else{
+            echo $row['result'];
+        }
+        
     }
     else{  
         
@@ -387,16 +394,17 @@ function updateProduct(){
     $OldPriceInput =$data['OldPriceInput'];
     $dateDiscountInput =$data['dateDiscountInput'];
     $urlImageProductInput=$data['urlImageProductInput'];
+
     $query="update Product SET ";
 
     $count=0;
     
-    if($idCategoryInput){       
+    if(isset($idCategoryInput)){       
         $count=1;
         $query=$query."idCategory='$idCategoryInput'";
     }
 
-    if($IDTradeMarkInput!=-1){
+    if(isset($IDTradeMarkInput)){
         if($count==1){
             $query=$query.",";
         }else{
@@ -405,7 +413,7 @@ function updateProduct(){
         $query=$query."IDTradeMark='$IDTradeMarkInput'";
     }
 
-    if($IdSpecificationsInput!=-1){
+    if(isset($IdSpecificationsInput)){
         if($count==1){
             $query=$query.",";
         }else{
@@ -414,7 +422,7 @@ function updateProduct(){
         $query=$query." IdSpecifications='$IdSpecificationsInput'";
     }
 
-    if($NameInput!=-1){
+    if(isset($NameInput)){
         if($count==1){
             $query=$query.",";
         }else{
@@ -423,7 +431,7 @@ function updateProduct(){
         $query=$query." Name='$NameInput'";
     }
 
-    if($SlugInput!=-1){
+    if(isset($SlugInput)){
         if($count==1){
             $query=$query.",";
         }else{
@@ -432,7 +440,7 @@ function updateProduct(){
         $query=$query." Slug='$SlugInput'";
     }
 
-    if($CurrentPriceInput!=-1){
+    if(isset($CurrentPriceInput)){
         if($count==1){
             $query=$query.",";
         }else{
@@ -441,7 +449,7 @@ function updateProduct(){
         $query=$query." CurrentPrice='$CurrentPriceInput'";
     }
 
-    if($OldPriceInput!=-1){
+    if(isset($OldPriceInput)){
         if($count==1){
             $query=$query.",";
         }else{
@@ -450,7 +458,7 @@ function updateProduct(){
         $query=$query." OldPrice='$OldPriceInput'";
     }
 
-    if($dateDiscountInput!=-1){
+    if(isset($dateDiscountInput)){
         if($count==1){
             $query=$query.",";
         }else{
@@ -459,7 +467,7 @@ function updateProduct(){
         $query=$query." dateDiscount='$dateDiscountInput'";
     }
 
-    if($dateDiscountInput!=-1){
+    if(isset($dateDiscountInput)){
         if($count==1){
             $query=$query.",";
         }else{
@@ -475,12 +483,10 @@ function updateProduct(){
 
     $result=mysqli_query($connect,$query);
 
-    if($result){
-        
+    if($result){        
         echo 200;
     }
-    else{  
-        
+    else{          
         echo 504;
     }
 
