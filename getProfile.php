@@ -22,6 +22,25 @@
             $this->urlAvata = $urlAvata;   
         }
     }
+
+        $id=$_GET["id"]; 
+
+        if(isset($id)){
+            $query="select *from Category where ID=$id;";
+            $result=mysqli_query($connect,$query);
+
+            if($result){
+                $row=$result->fetch_assoc();
+                $object=new infor($row['username'], $row['email'], $row['fullname'], $row['idGender'],
+                                    $row['DateOfBirth'],$row['PhoneNumber'],$row['urlAvata']);      
+                echo json_encode($object,JSON_UNESCAPED_UNICODE );
+            }
+            else{
+                echo 504;
+            }
+            return;
+        }
+
     
     
     $query="select username ,email, fullname, idGender, DateOfBirth ,PhoneNumber, urlAvata from User where username='$username'";

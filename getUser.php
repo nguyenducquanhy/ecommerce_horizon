@@ -47,8 +47,7 @@ class pagination{
 
     $keyWord = $_GET["keyWord"];
     $curentPage =$_GET["page"];   
-    $limitLoad =$_GET["limit"];   
-
+    $limitLoad =$_GET["limit"];       
 
     if(isset($keyWord)){
         $queryUserProfile="Call getSearchUsers('$curentPage','$limitLoad','%$keyWord%');";

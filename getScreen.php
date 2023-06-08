@@ -23,6 +23,25 @@
         include'library/connect.php';
 
         $keyWord=$_GET['keyWord'];
+
+
+        $id=$_GET["id"]; 
+
+        if(isset($id)){
+            $query="select *from Category where ID=$id;";
+            $result=mysqli_query($connect,$query);
+
+            if($result){
+                $row=$result->fetch_assoc();
+                $object=new Screen($row["ID"],$row["idCategory"],$row["name"]);      
+                echo json_encode($object,JSON_UNESCAPED_UNICODE );
+            }
+            else{
+                echo 504;
+            }
+            return;
+        }
+
         if(isset($keyWord)){
             
             $query="select *from Screen where name like '%$keyWord%'";
