@@ -43,9 +43,33 @@ class pagination{
     include'library/cors.php';
     include'library/connect.php';
 
-
+    $keyWord = $_GET["keyWord"];
     $curentPage =$_GET["page"];   
     $limitLoad =$_GET["limit"];   
+
+
+    if(isset($keyWord)){
+        $queryUserProfile="Call getSearchUsers('$curentPage','$limitLoad','%$keyWord%');";
+        $queryCountUserProfile="Call getCountSearchUsers('$curentPage','$limitLoad','%$keyWord%')";
+
+        $result = mysqli_query($connect, $query);
+        $array = array();
+        
+        if($result){
+            while ($row=mysqli_fetch_array($result)){
+                array_push($array,new infor($row['username'], $row['fullname'], $row['email'],
+                $row['DateOfBirth'], $row['PhoneNumber'], $row['idGender'], $row['idRole']));
+            }
+            echo json_encode($array,JSON_UNESCAPED_UNICODE );
+            return;
+        }
+        else{
+            echo 504;
+            return;
+        }
+    }
+
+
 
     $queryUserProfile="Call getAllUser('$curentPage','$limitLoad');";
     $queryCountUserProfile="Call getCountForAllUser('$curentPage','$limitLoad')";
