@@ -19,6 +19,7 @@ class booking{
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: *");
 
 
 if($_SERVER['REQUEST_METHOD']==='GET'){
@@ -93,7 +94,11 @@ function  insertBooking(){
     $result=mysqli_query($connect,$query);
 
     if($result){
-        echo 200;
+        $row=mysqli_fetch_assoc($result);
+        $idBooking=$row['ID'];
+        echo json_encode(Array(
+            "idBooking"=>$idBooking
+        ),JSON_UNESCAPED_UNICODE);
     }
     else{
         echo 504;
