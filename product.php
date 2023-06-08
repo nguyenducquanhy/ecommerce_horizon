@@ -148,6 +148,8 @@ function getProduct(){
         $nameCategoryInput ,$nameCpuInput ,$nameRamInput ,$nameDiskInput ,
         $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput );
 
+        echo $queryProducts;
+        return
         
 
         $queryCountProducts=concatQueryCountingSearchProducts($keyWord,$curentPage,$limitLoad,$idStatusProductInput,
@@ -271,7 +273,7 @@ $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ){
      }else{
          $count=1;
      }
-     $query=$query."D.name = '$nameCategoryInput'";
+     $query=$query."D.name = '$nameDiskInput'";
     }
 
     if(isset($nameVgaInput)){     
@@ -322,8 +324,6 @@ function concatQueryCountingSearchProducts($keyWord,$curentPage,$limitLoad,$idSt
     $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput );
     
 
-    $lastNote=($curentPage-1)*$limitLoad;
-
     $sql="select $curentPage as _page,
             $limitLoad as _limit,
             count(Product.id ) as _totalRows
@@ -338,7 +338,7 @@ function concatQueryCountingSearchProducts($keyWord,$curentPage,$limitLoad,$idSt
             join Screen S on SP.IdSCREEN = S.ID
             join Color C on SP.IdCOLOR = C.ID
             join OS O on SP.IdOS = O.ID
-            where idStatusProduct = ".$idStatusProductInput. " and ". $query ." LIMIT $limitLoad OFFSET $lastNote;";
+            where idStatusProduct = ".$idStatusProductInput. " and ". $query;
     return $sql;
 }
 
