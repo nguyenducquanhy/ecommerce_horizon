@@ -42,9 +42,6 @@ function  getBooking(){
     include'library/cors.php';
     include'library/connect.php';
 
-   
-
-
     $query="select Booking.ID,sB.nameStatus,nameOfBuyer,Booking.dateBooking,TotalMoneyBill
     from Booking join statusBooking sB on sB.ID = Booking.idStatusBooking;";
 
@@ -83,6 +80,8 @@ function  insertBooking(){
     $NoteInput =$data['NoteInput'];
     $dateBooking=$data['dateBooking'];
 
+    $arrayBookingDetail=$data['arrayBookingDetail'];
+
     if(isset($idCouponInput))
     {
         $idCouponInput=null;
@@ -96,9 +95,20 @@ function  insertBooking(){
     if($result){
         $row=mysqli_fetch_assoc($result);
         $idBooking=$row['ID'];
-        echo json_encode(Array(
-            "idBooking"=>$idBooking
-        ),JSON_UNESCAPED_UNICODE);
+
+        $queryInsertBookingDeatail="insert into BookingDetail(idBooking, idProduct, amount, totalPriceOfProduct) VALUES ";
+
+        for($i=0; $i < sizeof($arrayBookingDetail); $i++){
+
+            $item=$arrayBookingDetail[$i];
+            $idProduct=$item['idProduct'];
+             $amount=$item['amount'];
+              $totalPriceOfProduct=$item['totalPriceOfProduct'];
+            $queryInsertBookingDeatail.="( $idBooking,$idProduct,$amount,$totalPriceOfProduct )";
+            $queryInsertBookingDeatail.=",";
+        }
+        $queryInsertBookingDeatail=substr_replace($queryInsertBookingDeatail ,"",-1);
+        echo $queryInsertBookingDeatail;
     }
     else{
         echo 504;
