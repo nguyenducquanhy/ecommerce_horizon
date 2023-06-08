@@ -44,7 +44,8 @@ function  getBooking(){
     $id=$_GET["id"]; 
 
     if(isset($id)){
-        $query="select *from Booking where ID=$id;";
+        $query="select Booking.ID,sB.nameStatus,nameOfBuyer,Booking.dateBooking,TotalMoneyBill
+        from Booking join statusBooking sB on sB.ID = Booking.idStatusBooking where ID=$id;";
         $result=mysqli_query($connect,$query);
 
         if($result){      

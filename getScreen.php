@@ -28,7 +28,7 @@
         $id=$_GET["id"]; 
 
         if(isset($id)){
-            $query="select *from Category where ID=$id;";
+            $query="select *from Screen where ID=$id;";
             $result=mysqli_query($connect,$query);
 
             if($result){
