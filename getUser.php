@@ -45,7 +45,7 @@ class pagination{
     include'library/cors.php';
     include'library/connect.php';
 
-    $keyWord = $_GET["q"];
+    $keyWord = $_GET["keyWord"];
     $curentPage =$_GET["page"];   
     $limitLoad =$_GET["limit"];   
 
