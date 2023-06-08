@@ -41,23 +41,7 @@ function  getBooking(){
     include'library/cors.php';
     include'library/connect.php';
 
-    $id=$_GET["id"]; 
-
-    if(isset($id)){
-        $query="select Booking.ID,sB.nameStatus,nameOfBuyer,Booking.dateBooking,TotalMoneyBill
-        from Booking join statusBooking sB on sB.ID = Booking.idStatusBooking where ID=$id;";
-        $result=mysqli_query($connect,$query);
-
-        if($result){      
-            $row=$result->fetch_assoc();
-            $object=new booking($row['ID'], $row['nameStatus'],$row['nameOfBuyer'],$row['dateBooking'],$row['TotalMoneyBill']);      
-            echo json_encode($object,JSON_UNESCAPED_UNICODE );
-        }
-        else{
-            echo 504;
-        }
-        return;
-    }
+   
 
 
     $query="select Booking.ID,sB.nameStatus,nameOfBuyer,Booking.dateBooking,TotalMoneyBill
