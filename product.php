@@ -148,8 +148,8 @@ function getProduct(){
         $nameCategoryInput ,$nameCpuInput ,$nameRamInput ,$nameDiskInput ,
         $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput );
 
-        echo $queryProducts;
-        return
+        // echo $queryProducts;
+        // return
         
 
         $queryCountProducts=concatQueryCountingSearchProducts($keyWord,$curentPage,$limitLoad,$idStatusProductInput,
