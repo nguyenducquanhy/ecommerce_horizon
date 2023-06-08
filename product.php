@@ -147,7 +147,9 @@ function getProduct(){
         $queryProducts=concatQuerySearchProducts($keyWord,$curentPage,$limitLoad,$idStatusProductInput,
         $nameCategoryInput ,$nameCpuInput ,$nameRamInput ,$nameDiskInput ,
         $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput );
-             
+
+        
+
         $queryCountProducts=concatQueryCountingSearchProducts($keyWord,$curentPage,$limitLoad,$idStatusProductInput,
         $nameCategoryInput ,$nameCpuInput ,$nameRamInput ,$nameDiskInput ,
         $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput );        
@@ -218,9 +220,9 @@ function concatQuerySearchProducts($keyWord,$curentPage,$limitLoad,$idStatusProd
             join Specification SP on Product.IdSpecifications = SP.ID
             join Cpu on SP.IdCPU = Cpu.ID
             join Ram on SP.IdCPU = Ram.ID
-            join Disk D on SP.ID = D.ID
-            join Vga V on SP.ID = V.ID
-            join Screen S on SP.ID = S.ID
+            join Disk D on SP.IdDISK = D.ID
+            join Vga V on SP.IdVGA = V.ID
+            join Screen S on SP.IdSCREEN = S.ID
             join Color C on SP.IdCOLOR = C.ID
             join OS O on SP.IdOS = O.ID
             where idStatusProduct = ".$idStatusProductInput. " and ". $query ." LIMIT $limitLoad OFFSET $lastNote;";
