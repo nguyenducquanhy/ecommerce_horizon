@@ -1,6 +1,8 @@
 
 <?php
-
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: *");
+    header("Access-Control-Allow-Methods: *");
 
 class infor{
     public $idRole;
@@ -43,7 +45,7 @@ class pagination{
     include'library/cors.php';
     include'library/connect.php';
 
-    $keyWord = $_GET["keyWord"];
+    $keyWord = $_GET["q"];
     $curentPage =$_GET["page"];   
     $limitLoad =$_GET["limit"];   
 
@@ -52,21 +54,36 @@ class pagination{
         $queryUserProfile="Call getSearchUsers('$curentPage','$limitLoad','%$keyWord%');";
         $queryCountUserProfile="Call getCountSearchUsers('$curentPage','$limitLoad','%$keyWord%')";
 
-        $result = mysqli_query($connect, $query);
-        $array = array();
+        // echo $queryUserProfile;
+        // echo $queryCountUserProfile;
+        // return;
+    
+        $resultUserProfile=mysqli_query($connect,$queryUserProfile)or die(mysqli_error($connect));
+        while(mysqli_next_result($connect)){;}
+
+        $resultPaginationUserProfile=mysqli_query($connect,$queryCountUserProfile)or die(mysqli_error($connect));
+        while(mysqli_next_result($connect)){;}
+
+        $arrayUser = array();
         
-        if($result){
-            while ($row=mysqli_fetch_array($result)){
-                array_push($array,new infor($row['username'], $row['fullname'], $row['email'],
-                $row['DateOfBirth'], $row['PhoneNumber'], $row['idGender'], $row['idRole']));
+        if($resultUserProfile && $resultPaginationUserProfile){      
+            while($row=$resultUserProfile->fetch_assoc()){       
+                array_push($arrayUser,new infor($row['idRole'],$row['username'], $row['fullname'],$row['email'],
+                $row['idGender'],$row['DateOfBirth'],$row['PhoneNumber']));
             }
-            echo json_encode($array,JSON_UNESCAPED_UNICODE );
-            return;
+    
+            $row=mysqli_fetch_assoc($resultPaginationUserProfile);  
+            $newCountingUser=new pagination($row['_page'],$row['_limit'], $row['_totalRows']); 
+               
+            echo json_encode(
+                Array("data"=>$arrayUser,
+                "pagination"=>$newCountingUser),JSON_UNESCAPED_UNICODE );
+                return;
         }
         else{
             echo 504;
             return;
-        }
+        }  
     }
 
 
