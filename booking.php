@@ -64,6 +64,7 @@ function  getBooking(){
 
     if(isset($idBooking)){
         $query="select * from  BookingDetail where BookingDetail.idBooking=$idBooking";
+    
         $result=mysqli_query($connect,$query);
 
         if($result){      
@@ -73,7 +74,7 @@ function  getBooking(){
                 array_push($arrayBookingDetail,$newBookingDetail);
             }
     
-            echo json_encode($arrayBooking,JSON_UNESCAPED_UNICODE );
+            echo json_encode($arrayBookingDetail,JSON_UNESCAPED_UNICODE );
         }
         else{
             echo 504;
