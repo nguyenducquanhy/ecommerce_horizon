@@ -1,39 +1,70 @@
 <?php
-include'library/cors.php';
-include'library/connect.php';
-    class user{
-        public $id;
-        public $name;
-        public $age;
+
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: *");
+    header("Access-Control-Allow-Methods: *");
+    class infor{
+        public $idRole;
+        public $username;  
+        public $fullname;
+        public $email;
+        public $idGender;
+        public $DateOfBirth;
+        public $PhoneNumber;
         
-        public function __construct($id,$name,$age)
+        public function __construct( $idRole,$username,$fullname,$email,$idGender,$DateOfBirth,$PhoneNumber)
         {
-            $this->id=$id;
-            $this->name=$name;
-            $this->age = $age;   
+            $this->idRole = $idRole;
+            $this->username = $username;
+            $this->fullname=$fullname;
+            $this->email=$email;
+            $this->idGender= $idGender;
+            $this->DateOfBirth=$DateOfBirth;
+            $this->PhoneNumber=$PhoneNumber;
+            $this->email=$email;
         }
-
+        function getFullname(){
+            return $this->fullname;
+        }
     }
 
-    $json = file_get_contents('php://input');
-    $data = json_decode($json,true);
-    $array=array();
+    if($_SERVER['REQUEST_METHOD']==='POST'){
+        insert();
+    }
+
+    function insert(){
+        include'library/cors.php';
+        include'library/connect.php';
     
-    for ($i=0; $i < sizeof($data); $i++) {
+        $json = file_get_contents('php://input');
+        $data = json_decode($json,true);
 
-        $item=$data[$i];
+        $isCheck=$data['isCheck'];
+        $arrInput=$data['isCheck'];
+
+
+        if($isCheck==1){
+            $array=array();
         
-        $id=$item['id'];        
-        $name = $item['name'];
-        $age = $item['age'];
-
-        $value=new user($id,$name,$age);
-
-        array_push($array,$value);    
-
+            for ($i=0; $i < sizeof($arrInput); $i++) {
+        
+                $row=$arrInput[$i];
+               
+                $value=new infor($row['idRole'],$row['username'], $row['fullname'],$row['email'],
+                $row['idGender'],$row['DateOfBirth'],$row['PhoneNumber']);
+        
+                array_push($array,$value);    
+        
+            }
+        
+            echo json_encode($array,JSON_UNESCAPED_UNICODE);
+        }
+    
+    
+    
+        
     }
-
-    echo json_encode($array,JSON_UNESCAPED_UNICODE);
+    
 
 
 
