@@ -40,7 +40,7 @@
         $data = json_decode($json,true);
 
         $isCheck=$data['isCheck'];
-        $arrInput=$data['isCheck'];
+        $arrInput=$data['data'];
 
 
         if($isCheck==1){
