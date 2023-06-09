@@ -59,10 +59,7 @@ class pagination{
     if($checkFilter){
         $queryUserProfile=getQueryUserProfile($curentPage,$limitLoad,$keyWord,$idRole,$idGender);
 
-        $queryCountUserProfile=getQueryCountUserProfile($keyWord,$idRole,$idGender);
-
-
-        
+        $queryCountUserProfile=getQueryCountUserProfile($curentPage,$limitLoad,$keyWord,$idRole,$idGender);
 
         // echo $queryUserProfile;
         // echo $queryCountUserProfile;
@@ -150,9 +147,9 @@ class pagination{
         return $query;
     }
 
-    function getQueryCountUserProfile($keyWord,$idRole,$idGender){
+    function getQueryCountUserProfile($curentPage,$limitLoad,$keyWord,$idRole,$idGender){
 
-        $query="select curentPage as _page,limitLoad as _limit,count(User.id ) as _totalRowsfrom User where idRole not in (2, 6, 7)";
+        $query="select $curentPage as _page,$limitLoad as _limit,count(User.id ) as _totalRows from User where idRole not in (2, 6, 7)";
 
         if(isset($keyWord)){
             $query.="and (User.username like '%$keyWord%' or User.fullname like '%$keyWord%')";
