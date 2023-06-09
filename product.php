@@ -319,7 +319,7 @@ $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ,$nameTradeMarkIn
     }else{
         $count=1;
     }
-    $query=$query." O.name = '$nameTradeMarkInput'";
+    $query=$query." TradeMark.name = '$nameTradeMarkInput'";
     }
 
     
