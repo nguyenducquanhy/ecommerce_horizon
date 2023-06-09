@@ -42,16 +42,25 @@ class pagination{
 
 }
 
+
     include'library/cors.php';
     include'library/connect.php';
-
-    $keyWord = $_GET["keyWord"];
+    
     $curentPage =$_GET["page"];   
-    $limitLoad =$_GET["limit"];       
+    $limitLoad =$_GET["limit"];   
 
-    if(isset($keyWord)){
-        $queryUserProfile="Call getSearchUsers('$curentPage','$limitLoad','%$keyWord%');";
-        $queryCountUserProfile="Call getCountSearchUsers('$curentPage','$limitLoad','%$keyWord%')";
+    $keyWord = $_GET["keyWord"];    
+    $idRole = $_GET["idRole"];
+    $idGender = $_GET["idGender"];
+
+    $checkFilter=$keyWord ||$idRole||$idGender;
+
+
+    if($checkFilter){
+        $queryUserProfile=getQueryUserProfile($curentPage,$limitLoad,$keyWord,$idRole,$idGender);
+        $queryCountUserProfile=getQueryCountUserProfile($curentPage,$limitLoad,$keyWord,$idRole,$idGender);
+
+        
 
         // echo $queryUserProfile;
         // echo $queryCountUserProfile;
@@ -114,6 +123,50 @@ class pagination{
     else{
         echo 504;
     }    
+
+
+    function getQueryUserProfile($curentPage,$limitLoad,$keyWord,$idRole,$idGender){
+
+        $lastNote=($curentPage - 1) * $limitLoad;
+
+        $query="select * from User where idRole not in (2, 6, 7)";
+
+        if(isset($keyWord)){
+            $query.="and (User.username like $keyWord or User.fullname like $keyWord)";
+        }
+
+        if(isset($idRole)){
+            $query.="and idRole = $idRole";
+        }
+
+        if(isset($idGender)){
+            $query.="and User.idGender=$idGender";
+        }
+
+        $query.="LIMIT $limitLoad OFFSET $lastNote;";
+    
+        return $query;
+    }
+
+    function getQueryCountUserProfile($curentPage,$limitLoad,$keyWord,$idRole,$idGender){
+        $lastNote=($curentPage - 1) * $limitLoad;
+
+        $query="select curentPage as _page,limitLoad as _limit,count(User.id ) as _totalRowsfrom User where idRole not in (2, 6, 7)";
+
+        if(isset($keyWord)){
+            $query.="and (User.username like $keyWord or User.fullname like $keyWord)";
+        }
+
+        if(isset($idRole)){
+            $query.="and idRole = $idRole";
+        }
+
+        if(isset($idGender)){
+            $query.="and User.idGender=$idGender";
+        }
+    
+        return $query;
+    }
 
 ?>
 

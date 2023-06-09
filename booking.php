@@ -1,4 +1,8 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: *");
+
 class booking{
     public $ID;
     public $nameStatus;
@@ -35,9 +39,7 @@ class bookingDetail{
 
 
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
-header("Access-Control-Allow-Methods: *");
+
 
 
 if($_SERVER['REQUEST_METHOD']==='GET'){

@@ -12,6 +12,7 @@
     }
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Headers: *");
+    header("Access-Control-Allow-Methods: *");
         
     if($_SERVER['REQUEST_METHOD']==='GET'){
         get();
