@@ -12,8 +12,9 @@ class infor{
     public $idGender;
     public $DateOfBirth;
     public $PhoneNumber;
+    public $urlAvata;
     
-    public function __construct( $idRole,$username,$fullname,$email,$idGender,$DateOfBirth,$PhoneNumber)
+    public function __construct( $idRole,$username,$fullname,$email,$idGender,$DateOfBirth,$PhoneNumber,$urlAvata)
     {
         $this->idRole = $idRole;
         $this->username = $username;
@@ -23,6 +24,7 @@ class infor{
         $this->DateOfBirth=$DateOfBirth;
         $this->PhoneNumber=$PhoneNumber;
         $this->email=$email;
+        $this->urlAvata=$urlAvata;
     }
     function getFullname(){
         return $this->fullname;
@@ -76,7 +78,7 @@ class pagination{
         if($resultUserProfile && $resultPaginationUserProfile){      
             while($row=$resultUserProfile->fetch_assoc()){       
                 array_push($arrayUser,new infor($row['idRole'],$row['username'], $row['fullname'],$row['email'],
-                $row['idGender'],$row['DateOfBirth'],$row['PhoneNumber']));
+                $row['idGender'],$row['DateOfBirth'],$row['PhoneNumber'],$row['urlAvata']));
             }
     
             $row=mysqli_fetch_assoc($resultPaginationUserProfile);  
@@ -131,36 +133,36 @@ class pagination{
         $query="select * from User where idRole not in (2, 6, 7)";
 
         if(isset($keyWord)){
-            $query.="and (User.username like '%$keyWord%' or User.fullname like '%$keyWord%')";
+            $query.=" and (User.username like '%$keyWord%' or User.fullname like '%$keyWord%') ";
         }
 
         if(isset($idRole)){
-            $query.="and idRole = $idRole";
+            $query.=" and idRole = $idRole ";
         }
 
         if(isset($idGender)){
-            $query.="and User.idGender=$idGender";
+            $query.=" and User.idGender=$idGender ";
         }
 
-        $query.="LIMIT $limitLoad OFFSET $lastNote;";
+        $query.=" LIMIT $limitLoad OFFSET $lastNote;";
     
         return $query;
     }
 
     function getQueryCountUserProfile($curentPage,$limitLoad,$keyWord,$idRole,$idGender){
 
-        $query="select $curentPage as _page,$limitLoad as _limit,count(User.id ) as _totalRows from User where idRole not in (2, 6, 7)";
+        $query="select $curentPage as _page,$limitLoad as _limit,count(User.id ) as _totalRows from User where idRole not in (2, 6, 7) ";
 
         if(isset($keyWord)){
-            $query.="and (User.username like '%$keyWord%' or User.fullname like '%$keyWord%')";
+            $query.=" and (User.username like '%$keyWord%' or User.fullname like '%$keyWord%') ";
         }
 
         if(isset($idRole)){
-            $query.="and idRole = $idRole";
+            $query.=" and idRole = $idRole ";
         }
 
         if(isset($idGender)){
-            $query.="and User.idGender=$idGender";
+            $query.=" and User.idGender=$idGender ";
         }
     
         return $query;
