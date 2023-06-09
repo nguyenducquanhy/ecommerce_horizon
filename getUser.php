@@ -63,9 +63,6 @@ class pagination{
 
         $queryCountUserProfile=getQueryCountUserProfile($curentPage,$limitLoad,$keyWord,$idRole,$idGender);
 
-        // echo $queryUserProfile;
-        // echo $queryCountUserProfile;
-        // return;
     
         $resultUserProfile=mysqli_query($connect,$queryUserProfile)or die(mysqli_error($connect));
         while(mysqli_next_result($connect)){;}
@@ -100,6 +97,7 @@ class pagination{
     $queryUserProfile="Call getAllUser('$curentPage','$limitLoad');";
     $queryCountUserProfile="Call getCountForAllUser('$curentPage','$limitLoad')";
 
+
     
     $resultUserProfile=mysqli_query($connect,$queryUserProfile)or die(mysqli_error($connect));
     while(mysqli_next_result($connect)){;}
@@ -111,7 +109,7 @@ class pagination{
     if($resultUserProfile && $resultPaginationUserProfile){      
         while($row=$resultUserProfile->fetch_assoc()){       
             array_push($arrayUser,new infor($row['idRole'],$row['username'], $row['fullname'],$row['email'],
-            $row['idGender'],$row['DateOfBirth'],$row['PhoneNumber']));
+            $row['idGender'],$row['DateOfBirth'],$row['PhoneNumber'],$row['urlAvata']));
         }
 
         $row=mysqli_fetch_assoc($resultPaginationUserProfile);  
