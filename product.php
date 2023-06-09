@@ -106,6 +106,7 @@ function getProduct(){
     $nameScreenInput =$_GET["nameScreenInput"]; 
     $nameColorInput =$_GET["nameColorInput"]; 
     $nameOsInput=$_GET["nameOsInput"];
+    $nameTradeMarkInput=$_GET["nameTradeMarkInput"];
 
     if(isset($slug)){
 
@@ -140,13 +141,13 @@ function getProduct(){
 
     $isForcusSearching=isset($keyWord) ||isset($nameCategoryInput) ||isset($nameCpuInput) ||isset($nameRamInput)|| 
                     isset($nameDiskInput) ||isset($nameVgaInput) ||
-                    isset($nameScreenInput) ||isset($nameColorInput) ||isset($nameOsInput);
+                    isset($nameScreenInput) ||isset($nameColorInput) ||isset($nameOsInput)||isset($nameTradeMarkInput);
 
     if($isForcusSearching){      
       
         $queryProducts=concatQuerySearchProducts($keyWord,$curentPage,$limitLoad,$idStatusProductInput,
         $nameCategoryInput ,$nameCpuInput ,$nameRamInput ,$nameDiskInput ,
-        $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput );
+        $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput,$nameTradeMarkInput );
 
         // echo $queryProducts;
         // return
@@ -154,7 +155,7 @@ function getProduct(){
 
         $queryCountProducts=concatQueryCountingSearchProducts($keyWord,$curentPage,$limitLoad,$idStatusProductInput,
         $nameCategoryInput ,$nameCpuInput ,$nameRamInput ,$nameDiskInput ,
-        $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput );        
+        $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput,$nameTradeMarkInput );        
 
     }
     else{        
@@ -196,10 +197,10 @@ function getProduct(){
 
 function concatQuerySearchProducts($keyWord,$curentPage,$limitLoad,$idStatusProductInput,
                 $nameCategoryInput ,$nameCpuInput ,$nameRamInput ,$nameDiskInput ,
-                $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ){
+                $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput,$nameTradeMarkInput ){
 
     $query=concatConditional($keyWord,$nameCategoryInput ,$nameCpuInput ,$nameRamInput ,$nameDiskInput ,
-    $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput );
+    $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput,$nameTradeMarkInput );
     $lastNote=($curentPage-1)*$limitLoad;
 
     $sql="select Product.id      as Id,
@@ -232,7 +233,7 @@ function concatQuerySearchProducts($keyWord,$curentPage,$limitLoad,$idStatusProd
 }
 
 function concatConditional($keyWord,$nameCategoryInput ,$nameCpuInput ,$nameRamInput ,$nameDiskInput ,
-$nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ){
+$nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ,$nameTradeMarkInput){
     $query="";
     $count=0;
     if(isset($keyWord)){       
@@ -312,16 +313,26 @@ $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ){
     $query=$query." O.name = '$nameOsInput'";
     }
 
+    if(isset($nameTradeMarkInput)){     
+        if($count==1){
+        $query=$query." and ";
+    }else{
+        $count=1;
+    }
+    $query=$query." O.name = '$nameTradeMarkInput'";
+    }
+
+    
     return $query;
 }
 
 function concatQueryCountingSearchProducts($keyWord,$curentPage,$limitLoad,$idStatusProductInput,
                 $nameCategoryInput ,$nameCpuInput ,$nameRamInput ,$nameDiskInput ,
-                $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ){
+                $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput,$nameTradeMarkInput ){
 
     
     $query=concatConditional($keyWord,$nameCategoryInput ,$nameCpuInput ,$nameRamInput ,$nameDiskInput ,
-    $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput );
+    $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput,$nameTradeMarkInput );
     
 
     $sql="select $curentPage as _page,
