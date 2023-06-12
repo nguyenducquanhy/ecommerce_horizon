@@ -8,6 +8,7 @@ header("Access-Control-Allow-Methods: *");
     include'library/connect.php';
     $username = $_GET["username"];
     class infor{
+        public $ID;
         public $username;
         public $email;
         public $fullname;
@@ -16,8 +17,9 @@ header("Access-Control-Allow-Methods: *");
         public $PhoneNumber;
         public $urlAvata;
         
-        public function __construct($username,$email,$fullname,$idGender,$DateOfBirth,$PhoneNumber,$urlAvata)
+        public function __construct($ID,$username,$email,$fullname,$idGender,$DateOfBirth,$PhoneNumber,$urlAvata)
         {
+            $this->ID = $ID;
             $this->username = $username;
             $this->email=$email;
             $this->fullname=$fullname;
@@ -31,14 +33,14 @@ header("Access-Control-Allow-Methods: *");
 
     
     
-    $query="select username ,email, fullname, idGender, DateOfBirth ,PhoneNumber, urlAvata from User where username='$username'";
+    $query="select  ID ,username ,email, fullname, idGender, DateOfBirth ,PhoneNumber, urlAvata from User where username='$username'";
     $result=mysqli_query($connect,$query);
         if($result){
             $object;
             
             while($row=mysqli_fetch_array($result)){
                 
-                $object= new infor($row['username'], $row['email'], $row['fullname'], $row['idGender'],
+                $object= new infor($row['ID'],$row['username'], $row['email'], $row['fullname'], $row['idGender'],
                 $row['DateOfBirth'],$row['PhoneNumber'],$row['urlAvata']);
                 
             }
