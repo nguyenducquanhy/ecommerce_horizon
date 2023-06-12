@@ -24,6 +24,17 @@
         include'library/connect.php';
 
         $keyWord=$_GET['keyWord'];
+
+        $idCatelogy=$_GET['idCatelogy'];        
+
+        if(isset($idCatelogy)){
+            
+            $query="select *from Vga where idCategory =$idCatelogy and isActive=1";
+            $result=mysqli_query($connect,$query);
+            convertMysqlResultToArray($result);
+            return;
+        }
+
         if(isset($keyWord)){
             
             $query="select *from Vga where name like '%$keyWord%'";

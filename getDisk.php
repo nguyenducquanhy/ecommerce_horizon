@@ -24,7 +24,15 @@
         include'library/connect.php';
 
         $keyWord=$_GET['keyWord'];
-     
+        $idCatelogy=$_GET['idCatelogy'];        
+
+        if(isset($idCatelogy)){
+            
+            $query="select *from Disk where idCategory =$idCatelogy and isActive=1";
+            $result=mysqli_query($connect,$query);
+            convertMysqlResultToArray($result);
+            return;
+        }
 
         if(isset($keyWord)){
             
