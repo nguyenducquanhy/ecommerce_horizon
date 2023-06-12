@@ -20,19 +20,21 @@ class booking{
 
 }
 
+
 class bookingDetail{
-    public $ID;
-    public $idBooking;
-    public $idProduct;
+    public $ID;    
+
     public $amount;
     public $totalPriceOfProduct;
+    public $nameProduct;
+    public $urlImage;
 
-    public function __construct( $ID, $idBooking,$idProduct,$amount,$totalPriceOfProduct){
-        $this->ID=$ID;
-        $this->idBooking=$idBooking;
-        $this->idProduct=$idProduct;
+    public function __construct( $ID, $amount,$totalPriceOfProduct,$nameProduct, $urlImage){
+        $this->ID=$ID;        
         $this->amount=$amount;
         $this->totalPriceOfProduct=$totalPriceOfProduct;       
+        $this->nameProduct=$nameProduct;
+        $this->urlImage=$urlImage;
      }
 
 }
@@ -65,18 +67,43 @@ function  getBooking(){
     $idBooking=$_GET['idBooking'];
 
     if(isset($idBooking)){
-        $query="select * from  BookingDetail where BookingDetail.idBooking=$idBooking";
+        $queryBookingDetail="select BookingDetail.id, idproduct, amount, totalpriceofproduct,P.Name,P.image
+        from BookingDetail
+                 join Product P on P.Id = BookingDetail.idProduct
+        where BookingDetail.idBooking = $idBooking";
     
-        $result=mysqli_query($connect,$query);
+        $queryBooking="select Booking.ID,sB.nameStatus,nameOfBuyer,Booking.dateBooking,TotalMoneyBill
+        from Booking join statusBooking sB on sB.ID = Booking.idStatusBooking where Booking.ID= $idBooking ";
 
-        if($result){      
+        // echo $queryBookingDetail;
+        // echo $queryBooking;
+        // return;
+
+        $resulBookingDetail=mysqli_query($connect,$queryBookingDetail)or die(mysqli_error($connect));
+        while(mysqli_next_result($connect)){;}
+
+        $resultBooking=mysqli_query($connect,$queryBooking)or die(mysqli_error($connect));
+        while(mysqli_next_result($connect)){;}
+
+        //&&$resultBooking
+
+        if($resulBookingDetail&&$resultBooking){      
+
             $arrayBookingDetail=array();
-            while($row=$result->fetch_assoc()){        
-                $newBookingDetail=new bookingDetail($row['ID'], $row['idBooking'],$row['idProduct'],$row['amount'],$row['totalPriceOfProduct']);
+            while($row=$resulBookingDetail->fetch_assoc()){        
+                $newBookingDetail=new bookingDetail($row['id'],$row['amount'],$row['totalpriceofproduct'], $row['Name'], $row['image']);
                 array_push($arrayBookingDetail,$newBookingDetail);
             }
-    
-            echo json_encode($arrayBookingDetail,JSON_UNESCAPED_UNICODE );
+
+            $row=$resultBooking->fetch_assoc();  
+            $newBooking=new booking($row['ID'], $row['nameStatus'],$row['nameOfBuyer'],$row['dateBooking'],$row['TotalMoneyBill']);
+
+            // echo json_encode(
+            //     Array("BookingDetail"=>$arrayBookingDetail),JSON_UNESCAPED_UNICODE );
+
+            echo json_encode(
+            Array("BookingDetail"=>$arrayBookingDetail,
+            "Booking"=>$newBooking),JSON_UNESCAPED_UNICODE );
         }
         else{
             echo 504;

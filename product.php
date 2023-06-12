@@ -367,10 +367,12 @@ function insertProduct(){
     $NameInput =$data['NameInput'];
     $SlugInput =$data['SlugInput'];
     $CurrentPriceInput =$data['CurrentPriceInput'];
-    $UrlImageProductInput=$data['UrlImageProductInput'];
+    $urlImageProductInput=$data['urlImageProductInput'];
 
     $query="call insertProduct('$idCategoryInput', '$IDTradeMarkInput', '$IdSpecificationsInput',
-    '$NameInput', '$SlugInput', '$CurrentPriceInput','$UrlImageProductInput')";
+    '$NameInput', '$SlugInput', '$CurrentPriceInput','$urlImageProductInput')";
+
+    //echo $query;
 
     $result=mysqli_query($connect,$query);
 
@@ -483,7 +485,7 @@ function updateProduct(){
         $query=$query." dateDiscount='$dateDiscountInput'";
     }
 
-    if(isset($dateDiscountInput)){
+    if(isset($urlImageProductInput)){
         if($count==1){
             $query=$query.",";
         }else{
@@ -495,9 +497,9 @@ function updateProduct(){
 
     $query=$query." where Id= $idProduct";
     
-    // echo $query;
+     //echo $query;
 
-    $result=mysqli_query($connect,$query);
+     $result=mysqli_query($connect,$query);
 
     if($result){        
         echo 200;
