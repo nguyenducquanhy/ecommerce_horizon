@@ -24,7 +24,7 @@
 
         $keyWord=$_GET['keyWord'];
 
-        $idCatelogy=$_GET['idCatelogy'];        
+        $idCatelogy=$_GET['idCatelogy'];
 
         if(isset($idCatelogy)){
             
