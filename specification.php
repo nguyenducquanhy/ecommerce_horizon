@@ -25,9 +25,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     if($result){        
         $row=mysqli_fetch_array($result);        
         
-        echo Array(
-            "idSpecification"=>$row['idSpecification']
-        );
+        echo $row['idSpecification'];
           
     }
     else{
