@@ -57,6 +57,26 @@ function getDepot(){
     $queryDepot="Call getDepots('$curentPage','$limitLoad');";
     $queryCountingDepot="Call getCountingDepots('$curentPage','$limitLoad')";
 
+
+    $idProduct =$_GET["idProduct"];   
+
+    if(isset($idProduct)){
+        $queryGetDepotByIdProduct="select * from Depot where idPRoduct=$idProduct;";
+
+        $resultGetDepotByIdProduct=mysqli_query($connect,$queryGetDepotByIdProduct)or die(mysqli_error($connect));
+        while(mysqli_next_result($connect)){;}
+
+   
+        if($resultGetDepotByIdProduct){      
+            $row=$resultGetDepotByIdProduct->fetch_assoc();
+            $depot=new depot($row['ID'],$row['idPRoduct'], $row['quantily'],$row['da_co'],$row['upcomingGoods']);
+            echo json_encode($depot,JSON_UNESCAPED_UNICODE );
+        }
+
+    }
+
+
+
     
     $resultDepot=mysqli_query($connect,$queryDepot)or die(mysqli_error($connect));
     while(mysqli_next_result($connect)){;}
