@@ -2,17 +2,21 @@
 
 class depot{
     public $ID;
-    public $idPRoduct;
+    
     public $quantily;
     public $da_co;
     public $upcomingGoods;
 
-    function __construct($ID,$idPRoduct,$quantily,$da_co,$upcomingGoods){
+    public $nameProduct;
+    public $image;
+    function __construct($ID,$quantily,$da_co,$upcomingGoods,$nameProduct,$image){
         $this->ID=$ID;
-        $this->idPRoduct=$idPRoduct;
+        
         $this->quantily=$quantily;
         $this->da_co=$da_co;
         $this->upcomingGoods=$upcomingGoods;
+        $this->nameProduct=$nameProduct;
+        $this->image=$image;
     }
 }
 header("Access-Control-Allow-Origin: *");
@@ -61,7 +65,9 @@ function getDepot(){
     $idProduct =$_GET["idProduct"];   
 
     if(isset($idProduct)){
-        $queryGetDepotByIdProduct="select * from Depot where idPRoduct=$idProduct;";
+        $queryGetDepotByIdProduct="select Depot.ID,Depot.quantily,Depot.da_co,Depot.upcomingGoods,P.Name as nameProduct,P.image 
+        from Depot join Product P on P.Id = Depot.idPRoduct
+         where idPRoduct=$idProduct;";
 
         $resultGetDepotByIdProduct=mysqli_query($connect,$queryGetDepotByIdProduct)or die(mysqli_error($connect));
         while(mysqli_next_result($connect)){;}
@@ -69,8 +75,9 @@ function getDepot(){
    
         if($resultGetDepotByIdProduct){      
             $row=$resultGetDepotByIdProduct->fetch_assoc();
-            $depot=new depot($row['ID'],$row['idPRoduct'], $row['quantily'],$row['da_co'],$row['upcomingGoods']);
+            $depot=new depot($row['ID'], $row['quantily'],$row['da_co'],$row['upcomingGoods'],$row['nameProduct'],$row['image']);
             echo json_encode($depot,JSON_UNESCAPED_UNICODE );
+            return;
         }
 
     }
@@ -87,8 +94,7 @@ function getDepot(){
     $arrayDepot=array();
     if($resultDepot && $resultPaginationDepot){      
         while($row=$resultDepot->fetch_assoc()){       
-            array_push($arrayDepot,new depot($row['ID'],$row['idPRoduct'], $row['quantily'],$row['da_co'],
-            $row['upcomingGoods']));
+            array_push($arrayDepot,new depot($row['ID'], $row['quantily'],$row['da_co'],$row['upcomingGoods'],$row['nameProduct'],$row['image']));
         }
 
         $row=mysqli_fetch_assoc($resultPaginationDepot);  
