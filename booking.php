@@ -140,6 +140,17 @@ function  insertBooking(){
     $json = file_get_contents('php://input');
     $data = json_decode($json,true);
 
+    $arrayBookingDetail=$data['arrayBookingDetail'];
+
+    $isEnoughAllProduct= checkQuantilyOfProduct($arrayBookingDetail);
+
+    if(!$isEnoughAllProduct) {
+        echo 1;
+        return;
+    }
+
+   
+
     $idCouponInput =$data['idCouponInput'];
     $idUserInput  =$data['idUserInput'];
     $idStatusBookingInput =$data['idStatusBookingInput'];    
@@ -151,7 +162,7 @@ function  insertBooking(){
     $NoteInput =$data['NoteInput'];
     $dateBooking=$data['dateBooking'];
 
-    $arrayBookingDetail=$data['arrayBookingDetail'];
+    
 
     if(isset($idCouponInput))
     {
@@ -162,6 +173,7 @@ function  insertBooking(){
     '$addressOfBuyerInput' , '$phoneNumberOfBuyerInput' , '$emailOfBuyerInput' , '$TotalMoneyBillInput' , '$NoteInput','$dateBooking')";
     
     //echo $query;
+    
     
     
     $result=mysqli_query($connect,$query);
@@ -176,13 +188,19 @@ function  insertBooking(){
             
             $queryInsertBookingDeatail="insert into BookingDetail(idBooking, idProduct, amount, totalPriceOfProduct) VALUE ";
             for($i=0; $i < sizeof($arrayBookingDetail); $i++){
+                $idProduct=$item['idProduct'];                
+                
+                $item=$arrayBookingDetail[$i];
+                
+                $amount=$item['amount'];
+                $totalPriceOfProduct=$item['totalPriceOfProduct'];
+                $queryInsertBookingDeatail.="( $idBooking,$idProduct,$amount,$totalPriceOfProduct )";
+                $queryInsertBookingDeatail.=",";
 
-            $item=$arrayBookingDetail[$i];
-            $idProduct=$item['idProduct'];
-             $amount=$item['amount'];
-              $totalPriceOfProduct=$item['totalPriceOfProduct'];
-            $queryInsertBookingDeatail.="( $idBooking,$idProduct,$amount,$totalPriceOfProduct )";
-            $queryInsertBookingDeatail.=",";
+                //query update depot by idProduct
+                $queryUpdateDepot="update Depot SET quantily= quantily - $amount , da_co = da_co + $amount where idPRoduct = $idProduct;";
+                mysqli_query($connect,$queryUpdateDepot)or die(mysqli_error($connect));
+                while(mysqli_next_result($connect)){;}
             }
        
             $queryInsertBookingDeatail=substr_replace($queryInsertBookingDeatail ,"",-1);
@@ -204,6 +222,38 @@ function  insertBooking(){
     else{
         echo 504;
     }
+}
+
+function checkQuantilyOfProduct($arrayBookingDetail)  {
+    include'library/cors.php';
+    include'library/connect.php';
+
+    $currentDepotQuantilyOfProduct="select quantily from Depot where idPRoduct in (";
+    for($i=0; $i < sizeof($arrayBookingDetail); $i++){
+        $item=$arrayBookingDetail[$i];
+        $idProduct=$item['idProduct'];
+        $currentDepotQuantilyOfProduct.=$idProduct.",";
+    }
+    $currentDepotQuantilyOfProduct=substr_replace($currentDepotQuantilyOfProduct ,"",-1).")";
+
+    $resultCurrentQuantilyOfProduct=mysqli_query($connect,$currentDepotQuantilyOfProduct)or die(mysqli_error($connect));
+    while(mysqli_next_result($connect)){;}
+
+    if($resultCurrentQuantilyOfProduct){
+        $index=0;
+        while($row=$resultCurrentQuantilyOfProduct->fetch_assoc()){    
+            $item=$arrayBookingDetail[$index];
+            if($row["quantily"]<$item['idProduct']){
+                return false;
+            }
+    
+            $index++;
+        }
+    }else{
+        return false;
+    }
+
+    return true;
 }
 
 function  updateBooking(){

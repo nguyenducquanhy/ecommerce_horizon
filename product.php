@@ -222,7 +222,7 @@ function concatQuerySearchProducts($keyWord,$curentPage,$limitLoad,$idStatusProd
             join Category on Product.idCategory = Category.ID
             join Specification SP on Product.IdSpecifications = SP.ID
             join Cpu on SP.IdCPU = Cpu.ID
-            join Ram on SP.IdCPU = Ram.ID
+            join Ram on SP.IdRAM = Ram.ID
             join Disk D on SP.IdDISK = D.ID
             join Vga V on SP.IdVGA = V.ID
             join Screen S on SP.IdSCREEN = S.ID
@@ -247,7 +247,7 @@ $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ,$nameTradeMarkIn
         }else{
             $count=1;
         }
-        $query=$query." Category.name = '$nameCategoryInput'";
+        $query=$query." Category.name like '$nameCategoryInput'";
     }
 
     if(isset($nameCpuInput)){     
@@ -256,7 +256,7 @@ $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ,$nameTradeMarkIn
      }else{
          $count=1;
      }
-     $query=$query."Cpu.name = '$nameCpuInput'";
+     $query=$query."Cpu.name like '$nameCpuInput'";
     }
     
     if(isset($nameRamInput)){     
@@ -265,7 +265,7 @@ $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ,$nameTradeMarkIn
         }else{
             $count=1;
         }
-        $query=$query." Ram.name = '$nameRamInput'";
+        $query=$query." Ram.name like '$nameRamInput'";
     }
 
     if(isset($nameDiskInput)){     
@@ -274,7 +274,7 @@ $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ,$nameTradeMarkIn
      }else{
          $count=1;
      }
-     $query=$query."D.name = '$nameDiskInput'";
+     $query=$query."D.name like '$nameDiskInput'";
     }
 
     if(isset($nameVgaInput)){     
@@ -283,7 +283,7 @@ $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ,$nameTradeMarkIn
      }else{
          $count=1;
      }
-     $query=$query." V.name = '$nameVgaInput'";
+     $query=$query." V.name like '$nameVgaInput'";
     }
 
     if(isset($nameScreenInput)){     
@@ -292,7 +292,7 @@ $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ,$nameTradeMarkIn
     }else{
         $count=1;
     }
-    $query=$query." S.name = '$nameScreenInput'";
+    $query=$query." S.name like '$nameScreenInput'";
     }
     
     if(isset($nameColorInput)){     
@@ -301,7 +301,7 @@ $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ,$nameTradeMarkIn
         }else{
             $count=1;
         }
-        $query=$query." C.name = '$nameColorInput'";
+        $query=$query." C.name like '$nameColorInput'";
     }
 
     if(isset($nameOsInput)){     
@@ -310,7 +310,7 @@ $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ,$nameTradeMarkIn
     }else{
         $count=1;
     }
-    $query=$query." O.name = '$nameOsInput'";
+    $query=$query." O.name like '$nameOsInput'";
     }
 
     if(isset($nameTradeMarkInput)){     
@@ -319,7 +319,7 @@ $nameVgaInput ,$nameScreenInput ,$nameColorInput ,$nameOsInput ,$nameTradeMarkIn
     }else{
         $count=1;
     }
-    $query=$query." TradeMark.name = '$nameTradeMarkInput'";
+    $query=$query." TradeMark.name like '$nameTradeMarkInput'";
     }
 
     
@@ -343,7 +343,7 @@ function concatQueryCountingSearchProducts($keyWord,$curentPage,$limitLoad,$idSt
             join Category on Product.idCategory = Category.ID
             join Specification SP on Product.IdSpecifications = SP.ID
             join Cpu on SP.IdCPU = Cpu.ID
-            join Ram on SP.IdCPU = Ram.ID
+            join Ram on SP.IdRAM = Ram.ID
             join Disk D on SP.IdDISK = D.ID
             join Vga V on SP.IdVGA = V.ID
             join Screen S on SP.IdSCREEN = S.ID
