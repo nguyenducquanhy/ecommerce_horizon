@@ -93,6 +93,7 @@ function getProduct(){
       
     $curentPage =$_GET["page"];   
     $limitLoad =$_GET["limit"];   
+    
     $idStatusProductInput =$_GET["idStatusProductInput"];  
 
     $slug=$_GET["slug"];
