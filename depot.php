@@ -58,10 +58,6 @@ function getDepot(){
     $curentPage =$_GET["page"];   
     $limitLoad =$_GET["limit"];   
 
-    $queryDepot="Call getDepots('$curentPage','$limitLoad');";
-    $queryCountingDepot="Call getCountingDepots('$curentPage','$limitLoad')";
-
-
     $idProduct =$_GET["idProduct"];   
 
     if(isset($idProduct)){
@@ -82,6 +78,8 @@ function getDepot(){
 
     }
 
+    $queryDepot="Call getDepots('$curentPage','$limitLoad');";
+    $queryCountingDepot="Call getCountingDepots('$curentPage','$limitLoad')";
 
 
     
