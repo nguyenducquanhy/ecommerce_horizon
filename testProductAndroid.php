@@ -1,20 +1,17 @@
 <?php
 class product{
     public $idProduct ;
-    public $Category ;
-    public $TradeMark;    
     public $NameProduct;
     public $Slug;
     public $CurrentPrice; 
     public $image;
 
 
-    public function __construct ($idProduct,$Category,$TradeMark,$Name,$Slug,
+    public function __construct ($idProduct,$Name,$Slug,
                                 $CurrentPrice,$image){
                                     
         $this ->idProduct = $idProduct;
-        $this ->Category = $Category;
-        $this ->TradeMark = $TradeMark;
+
         $this ->NameProduct = $Name;
         $this ->Slug = $Slug;
         $this ->CurrentPrice = $CurrentPrice;
@@ -39,7 +36,7 @@ if($result){
   
    
        $DetailProduct=new product(
-           $row['Id'],$row['Category'], $row['TradeMark'],
+           $row['Id'],
            $row['Name'],$row['Slug'],
            $row['CurrentPrice'],$row["image"]);            
            array_push($array,$DetailProduct);
