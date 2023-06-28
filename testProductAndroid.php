@@ -58,17 +58,19 @@ $query ="select *from Product";
 $result=mysqli_query($connect,$query)or die(mysqli_error($connect));
 
 if($result){      
-    $row=$result->fetch_array();
-                        
-    $Specifications=new Specifications($row['CpuName'],$row['RamName'],$row['DiskName'],$row['VgaName'],
-     $row['ScreenName'],$row['ColorName'],$row['OsName']);
+    $array=array();
+    while($row=$result->fetch_array()){
+        $Specifications=new Specifications($row['CpuName'],$row['RamName'],$row['DiskName'],$row['VgaName'],
+        $row['ScreenName'],$row['ColorName'],$row['OsName']);
+   
+       $DetailProduct=new product(
+           $row['Id'],$row['Category'], $row['TradeMark'],
+           $Specifications,$row['Name'],$row['Slug'],
+           $row['CurrentPrice'],$row["image"]);            
+           array_push($array,$DetailProduct);
+    }
 
-    $DetailProduct=new product(
-        $row['Id'],$row['Category'], $row['TradeMark'],
-        $Specifications,$row['Name'],$row['Slug'],
-        $row['CurrentPrice'],$row["image"]);                
-                
-    echo json_encode( $DetailProduct,JSON_UNESCAPED_UNICODE);
+    echo json_encode( $array,JSON_UNESCAPED_UNICODE);
           
 }
 else{
