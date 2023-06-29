@@ -6,10 +6,11 @@ use PHPMailer\PHPMailer\Exception;
 require 'PHPMailer-master/src/Exception.php';
 require 'PHPMailer-master/src/PHPMailer.php';
 require 'PHPMailer-master/src/SMTP.php';
+require 'vendor/autoload.php';
 
 
 try {
-    $mail = new PHPMailer();
+    $mail = new PHPMailer(true);
     $mail->IsSMTP();
     $mail->Mailer = "smtp";
     //Server settings
