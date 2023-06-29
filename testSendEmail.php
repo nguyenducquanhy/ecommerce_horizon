@@ -6,9 +6,9 @@ use PHPMailer\PHPMailer\Exception;
 
 //require 'vendor/autoload.php';
 
-$mail ;
-echo 1;
+
 try {
+    $mail = new PHPMailer(true);
     //Server settings
     $mail->SMTPDebug = 2;                               
     $mail->isSMTP();                                      
