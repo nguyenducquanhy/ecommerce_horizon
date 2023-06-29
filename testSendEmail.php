@@ -1,10 +1,8 @@
 
 <?php
-include 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
-include 'vendor/phpmailer/phpmailer/src/Exception.php';
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+use phpmailer\phpmailer\PHPMailer;
+use phpmailer\phpmailer\Exception;
 
 require 'vendor/autoload.php';
 
