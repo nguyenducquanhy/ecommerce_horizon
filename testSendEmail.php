@@ -1,5 +1,7 @@
 
 <?php
+include 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+include 'vendor/phpmailer/phpmailer/src/Exception.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -12,7 +14,7 @@ $subject = 'Here is the subject';
 $body ='This is the HTML message body <b>in bold!</b>';
 echo 1;
 // Khởi tạo một đối tượng PHPMailer
-$mail = new PHPMailer();
+$mail = new PHPMailer(true);
 echo 2;
 try {
     echo 3;
