@@ -10,11 +10,12 @@ require 'vendor/autoload.php';
 $recipient = 'quanhy2@example.com';
 $subject = 'Here is the subject';
 $body ='This is the HTML message body <b>in bold!</b>';
-
+echo 1;
 // Khởi tạo một đối tượng PHPMailer
 $mail = new PHPMailer(true);
-
+echo 2;
 try {
+    echo 3;
     // Cấu hình máy chủ SMTP của Gmail
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
@@ -23,7 +24,7 @@ try {
     $mail->Password = 'xzrqfpdwidjqwqbi';   // Your App Password
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
-
+    echo 3;
     // Thiết lập thông tin người gửi và người nhận
     $mail->setFrom('quanhy2@gmail.com', 'quan'); // Địa chỉ email và tên của bạn
     $mail->addAddress($recipient); // Địa chỉ email người nhận
@@ -32,7 +33,7 @@ try {
     $mail->isHTML(true);
     $mail->Subject = $subject;
     $mail->Body = $body;
-
+    echo 4;
     // Gửi email
     $mail->send();
     echo 'Email sent successfully!';
