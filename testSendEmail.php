@@ -1,42 +1,42 @@
-<?php
 
+<?php
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require 'PHPMailer-master/src/Exception.php';
-require 'PHPMailer-master/src/PHPMailer.php';
-require 'PHPMailer-master/src/SMTP.php';
+
 require 'vendor/autoload.php';
 
-$mail = new PHPMailer(true);
-try {
+// Đọc dữ liệu từ yêu cầu gửi email
+$recipient = 'quanhy2@example.com';
+$subject = 'Here is the subject';
+$body ='This is the HTML message body <b>in bold!</b>';
 
-    $mail->IsSMTP();
-    $mail->Mailer = "smtp";
-    //Server settings
-    $mail->SMTPDebug = 2;        
-    $mail->Host = 'smtp.gmail.com';  // GMail SMTP server
-    $mail->SMTPAuth = true;                             
+// Khởi tạo một đối tượng PHPMailer
+$mail = new PHPMailer(true);
+
+try {
+    // Cấu hình máy chủ SMTP của Gmail
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
     $mail->Username = 'quanhy2@gmail.com';  // Your Gmail address
     $mail->Password = 'xzrqfpdwidjqwqbi';   // Your App Password
-    $mail->SMTPSecure = 'ssl';     
-    $mail->Port = 465;                                    
-    echo 2;
-    //Recipients
-    $mail->setFrom('quanhy2@example.com', 'duc quan');
-    $mail->addAddress('nguyenducquanhy2@example.com', 'quan giai tich');     
+    $mail->SMTPSecure = 'tls';
+    $mail->Port = 587;
 
-    echo 3;
-    //Content
-    $mail->isHTML(true);                                 
-    $mail->Subject = 'Here is the subject';
-    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-    echo 4;
+    // Thiết lập thông tin người gửi và người nhận
+    $mail->setFrom('quanhy2@gmail.com', 'quan'); // Địa chỉ email và tên của bạn
+    $mail->addAddress($recipient); // Địa chỉ email người nhận
+
+    // Thiết lập nội dung email
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body = $body;
+
+    // Gửi email
     $mail->send();
-    echo 5;
-    echo 'Message has been sent';
+    echo 'Email sent successfully!';
 } catch (Exception $e) {
-    echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+    echo 'Email could not be sent. Error: ', $mail->ErrorInfo;
 }
 ?>
