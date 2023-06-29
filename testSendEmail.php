@@ -12,7 +12,7 @@ $subject = 'Here is the subject';
 $body ='This is the HTML message body <b>in bold!</b>';
 echo 1;
 // Khởi tạo một đối tượng PHPMailer
-$mail = new PHPMailer(true);
+$mail = new PHPMailer();
 echo 2;
 try {
     echo 3;
