@@ -8,24 +8,24 @@ require 'PHPMailer-master/src/PHPMailer.php';
 require 'PHPMailer-master/src/SMTP.php';
 require 'vendor/autoload.php';
 
-
+$mail = new PHPMailer(true);
 try {
-    $mail = new PHPMailer(true);
+
     $mail->IsSMTP();
     $mail->Mailer = "smtp";
     //Server settings
-    $mail->SMTPDebug = 1;        
+    $mail->SMTPDebug = 2;        
     $mail->Host = 'smtp.gmail.com';  // GMail SMTP server
     $mail->SMTPAuth = true;                             
     $mail->Username = 'quanhy2@gmail.com';  // Your Gmail address
     $mail->Password = 'xzrqfpdwidjqwqbi';   // Your App Password
-    $mail->SMTPSecure = 'tls';     
-    $mail->Port = 587;                                    
+    $mail->SMTPSecure = 'ssl';     
+    $mail->Port = 465;                                    
     echo 2;
     //Recipients
     $mail->setFrom('quanhy2@example.com', 'duc quan');
     $mail->addAddress('nguyenducquanhy2@example.com', 'quan giai tich');     
-    $mail->addReplyTo('quanhy2@example.com', 'quan');
+
     echo 3;
     //Content
     $mail->isHTML(true);                                 
