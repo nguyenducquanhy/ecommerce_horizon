@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 
 //require 'vendor/autoload.php';
 
-$mail = new PHPMailer(true);
+$mail ;
 echo 1;
 try {
     //Server settings
