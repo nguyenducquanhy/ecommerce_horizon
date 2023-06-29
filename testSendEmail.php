@@ -7,9 +7,9 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 
 // Đọc dữ liệu từ yêu cầu gửi email
-$recipient = 'nguyenducquanhy2@example.com';
+$recipient = 'nguyenducquanhy2@gmail.com';
 $subject = 'Here is the subject';
-$body ='This is the HTML message body <b>in bold!</b>';
+$body ='This is the HTML message body ';
 echo 1;
 // Khởi tạo một đối tượng PHPMailer
 $mail = new PHPMailer(true);
