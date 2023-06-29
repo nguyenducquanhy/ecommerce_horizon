@@ -3,20 +3,22 @@
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-//require 'vendor/autoload.php';
+require 'PHPMailer-master/src/Exception.php';
+require 'PHPMailer-master/src/PHPMailer.php';
+require 'PHPMailer-master/src/SMTP.php';
 
 
 try {
-    $mail = new PHPMailer(true);
+    $mail = new PHPMailer();
+    $mail->IsSMTP();
+    $mail->Mailer = "smtp";
     //Server settings
-    $mail->SMTPDebug = 2;                               
-    $mail->isSMTP();                                      
+    $mail->SMTPDebug = 1;        
     $mail->Host = 'smtp.gmail.com';  // GMail SMTP server
     $mail->SMTPAuth = true;                             
     $mail->Username = 'quanhy2@gmail.com';  // Your Gmail address
     $mail->Password = 'xzrqfpdwidjqwqbi';   // Your App Password
-    $mail->SMTPSecure = 'tls';                         
+    $mail->SMTPSecure = 'tls';     
     $mail->Port = 587;                                    
     echo 2;
     //Recipients
