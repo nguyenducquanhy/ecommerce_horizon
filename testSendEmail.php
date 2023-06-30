@@ -19,27 +19,29 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 function sendOTP(){
 
     // Đọc dữ liệu từ yêu cầu gửi email
-    $otp =rand(10000,99999);
+    
 
     //$address = 'nguyenducquanhy2@gmail.com';
     $address=$_POST['address'];
-
-    if(!isset($address)) {
-        echo 500;
-        throw new Exception("Request mistake address.", 403);
-    }
-
-    $subject = $otp.' là mã xác nhận email của bạn';
-    $body ='Chào bạn,<br>
-            Đây là mã code xác nhận email của bạn: '. $otp.'<br>
-            Thân,<br>
-            Team Horizon Tech';
-
-
-    // Khởi tạo một đối tượng PHPMailer
-    $mail = new PHPMailer(true);
-
     try {
+        if(!isset($address)) {
+            echo 500;
+            throw new Exception("Request mistake address.", 403);
+        }
+
+        
+        $otp =rand(10000,99999);
+        $subject = $otp.' là mã xác nhận email của bạn';
+        $body ='Chào bạn,<br>
+                Đây là mã code xác nhận email của bạn: '. $otp.'<br>
+                Thân,<br>
+                Team Horizon Tech';
+
+
+        // Khởi tạo một đối tượng PHPMailer
+        $mail = new PHPMailer(true);
+
+    
         // Cấu hình máy chủ SMTP của Gmail
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
