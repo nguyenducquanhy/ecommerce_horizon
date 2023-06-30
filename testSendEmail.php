@@ -50,7 +50,7 @@ try {
     $mail->send();
     echo json_encode(
         Array("status"=>200,
-        "validCode"=>$body),JSON_UNESCAPED_UNICODE );
+        "validCode"=>$otp),JSON_UNESCAPED_UNICODE );
     
 } catch (Exception $e) {
     echo json_encode( Array("status"=>500,JSON_UNESCAPED_UNICODE ));
