@@ -13,9 +13,14 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 
 // Đọc dữ liệu từ yêu cầu gửi email
+$otp ='14541';
 $address = 'nguyenducquanhy2@gmail.com';
-$subject = 'send otp';
-$body ='14541';
+$subject = $otp.' là mã xác nhận email của bạn';
+$body ='Chào bạn,<br>
+
+Đây là mã code xác nhận email của bạn: '. $otp.'<br>
+Thân,<br>
+Team Horizon Tech';
 
 
 // Khởi tạo một đối tượng PHPMailer
