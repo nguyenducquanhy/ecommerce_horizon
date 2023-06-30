@@ -56,6 +56,7 @@ try {
         "validCode"=>$otp),JSON_UNESCAPED_UNICODE );
     
 } catch (Exception $e) {
-    echo json_encode( Array("status"=>500,JSON_UNESCAPED_UNICODE ));
+    echo json_encode( Array("status"=>500,
+    "validCode"=>null));
 }
 ?>
