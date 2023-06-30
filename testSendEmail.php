@@ -42,12 +42,15 @@ try {
     $mail->addAddress($address); // Địa chỉ email người nhận
 
     // Thiết lập nội dung email
+    $mail->CharSet = "UTF-8";
+    $mail->Encoding = 'base64';
     $mail->isHTML(true);
     $mail->Subject = $subject;
     $mail->Body = $body;
 
     // Gửi email
     $mail->send();
+    echo $subject;
     echo json_encode(
         Array("status"=>200,
         "validCode"=>$otp),JSON_UNESCAPED_UNICODE );
