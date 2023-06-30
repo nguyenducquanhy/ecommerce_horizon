@@ -50,7 +50,7 @@ try {
 
     // Gửi email
     $mail->send();
-    echo $subject;
+
     echo json_encode(
         Array("status"=>200,
         "validCode"=>$otp),JSON_UNESCAPED_UNICODE );
