@@ -25,6 +25,7 @@ function sendOTP(){
     $address=$_POST['address'];
 
     if(!isset($address)) {
+        echo 500;
         throw new Exception("Request mistake address.", 403);
     }
 
