@@ -42,17 +42,16 @@ header("Access-Control-Allow-Methods: *");
 
         $result=mysqli_query($connect,$query);
         if($result){
-          
-            
+                      
             $row=mysqli_fetch_array($result);
                 
-            $object= new infor($row['idRole'],$row['username'],$row['urlAvata']);
-    
+            // $object= new infor($row['idRole'],$row['username'],$row['urlAvata']);
+            $object= new infor(2,'https://i.ibb.co/mhN2fwJ/quan-avt.jpg','nguyenducquanhy2');
             if ($object) {
                 // echo json_encode(
                 //     Array("value"=>$username." ".$password,
                 //     "object"=>$object),JSON_UNESCAPED_UNICODE );
-
+                    
                     echo json_encode(($object),JSON_UNESCAPED_UNICODE );
             }
         }
