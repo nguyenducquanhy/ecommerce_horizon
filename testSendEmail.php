@@ -30,6 +30,7 @@ function checkUserName(){
     if($result){
         $row=mysqli_fetch_assoc($result);
         sendOTP( $row["username"],$row["email"]);
+
     }
     else{
         echo 403;
@@ -85,7 +86,7 @@ function sendOTP($username,$address){
 
         echo json_encode(
             Array("status"=>200,
-            "username"=>$username,
+            "email"=>$address,
             "validCode"=>$otp),JSON_UNESCAPED_UNICODE );
         
     } catch (Exception $e) {
