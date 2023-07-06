@@ -3,10 +3,8 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
-include'library/cors.php';
-include'library/connect.php';
-$username = $_POST['username'];
-$password = $_POST['password'];
+
+
 
     class infor {
         public $idRole;
@@ -20,23 +18,42 @@ $password = $_POST['password'];
         }
     } 
 
-    $query="call login('$username','$password')";
-
-    $result=mysqli_query($connect,$query);
-    if($result){
-      
+    if($_SERVER['REQUEST_METHOD']==='GET'){
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        login($username,$password);
         
-        $row=mysqli_fetch_array($result);
-            
-        $object= new infor($row['idRole'],$row['username'],$row['urlAvata']);
+    }
 
-        if ($object) {
-            echo json_encode($object,JSON_UNESCAPED_UNICODE );
-        }else {
+
+    if($_SERVER['REQUEST_METHOD']==='POST'){
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        login($username,$password);
+        
+    }
+
+    function  login($username,$password){
+        include'library/cors.php';
+        include'library/connect.php';
+        $query="call login('$username','$password')";
+
+        $result=mysqli_query($connect,$query);
+        if($result){
+          
+            
+            $row=mysqli_fetch_array($result);
+                
+            $object= new infor($row['idRole'],$row['username'],$row['urlAvata']);
+    
+            if ($object) {
+                echo json_encode($object,JSON_UNESCAPED_UNICODE );
+            }
+        }
+        else{
             echo 504;
         }
     }
-    else{
-        echo 504;
-    }
+
+    
 ?>
