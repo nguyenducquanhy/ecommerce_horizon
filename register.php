@@ -3,6 +3,16 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
+
+if($_SERVER['REQUEST_METHOD']==='GET'){
+    register();
+}
+
+if($_SERVER['REQUEST_METHOD']==='POST'){
+    register();
+}
+
+function register(){
     include'library/cors.php';
     include'library/connect.php';
     $idRole = 1;
@@ -31,4 +41,7 @@ header("Access-Control-Allow-Methods: *");
             echo 504;
         }
     }
+}
+
+    
 ?>

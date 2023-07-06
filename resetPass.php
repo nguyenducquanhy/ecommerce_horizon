@@ -3,7 +3,16 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
-    // include'library/cors.php';
+
+if($_SERVER['REQUEST_METHOD']==='GET'){
+    register();
+}
+
+if($_SERVER['REQUEST_METHOD']==='POST'){
+    register();
+}
+
+    include'library/cors.php';
     include'library/connect.php';
 
     $username = $_POST['username'];
@@ -21,5 +30,5 @@ header("Access-Control-Allow-Methods: *");
         }
     }else{
             echo 504;
-        }
+    }
 ?>

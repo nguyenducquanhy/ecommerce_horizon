@@ -4,8 +4,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
-include'library/cors.php';
-include'library/connect.php';
+
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -13,23 +12,42 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
-    sendOTP();
+    checkUserName();
+    
 }
 
-function sendOTP(){
+function checkUserName(){
+    include'library/cors.php';
+    include'library/connect.php';
+
+    // $json = file_get_contents('php://input');
+    // $data = json_decode($json,true);
+    $checkUsername=$_POST["username"];
+
+    $query="select username,email from User where username='$checkUsername';";
+    $result=mysqli_query($connect,$query);
+
+    if($result){
+        $row=mysqli_fetch_assoc($result);
+        sendOTP( $row["username"],$row["email"]);
+    }
+    else{
+        echo 403;
+    }
+}
+function sendOTP($username,$address){
+    
+
 
     // Đọc dữ liệu từ yêu cầu gửi email
     
 
     //$address = 'nguyenducquanhy2@gmail.com';
-    $address=$_POST['address'];
+  
     try {
-        if(!isset($address)) {
-            echo 500;
+        if(!isset($address)) 
             throw new Exception("Request mistake address.", 403);
-        }
-
-        
+            
         $otp =rand(10000,99999);
         $subject = $otp.' là mã xác nhận email của bạn';
         $body ='Chào bạn,<br>
@@ -67,6 +85,7 @@ function sendOTP(){
 
         echo json_encode(
             Array("status"=>200,
+            "username"=>$username,
             "validCode"=>$otp),JSON_UNESCAPED_UNICODE );
         
     } catch (Exception $e) {
