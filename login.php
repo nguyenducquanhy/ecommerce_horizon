@@ -19,23 +19,25 @@ header("Access-Control-Allow-Methods: *");
     } 
 
     if($_SERVER['REQUEST_METHOD']==='GET'){
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        login($username,$password);
+        
+        login();
         
     }
 
 
     if($_SERVER['REQUEST_METHOD']==='POST'){
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        login($username,$password);
+ 
+        login();
         
     }
 
-    function  login($username,$password){
+    function  login(){
         include'library/cors.php';
         include'library/connect.php';
+
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
         $query="call login('$username','$password')";
 
         $result=mysqli_query($connect,$query);
