@@ -34,9 +34,11 @@ header("Access-Control-Allow-Methods: *");
     function  login(){
         include'library/cors.php';
         include'library/connect.php';
+        $json = file_get_contents('php://input');
+        $data = json_decode($json,true);
 
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        $username = $data['username'];
+        $password = $data['password'];
 
         $query="call login('$username','$password')";
 
