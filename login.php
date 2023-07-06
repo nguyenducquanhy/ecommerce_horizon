@@ -24,21 +24,19 @@ $password = $_POST['password'];
 
     $result=mysqli_query($connect,$query);
     if($result){
-        $object;
+      
         
-        while($row=mysqli_fetch_array($result)){
+        $row=mysqli_fetch_array($result);
             
-            $object= new infor($row['idRole'],$row['username'],$row['urlAvata']);
-            
-        }
+        $object= new infor($row['idRole'],$row['username'],$row['urlAvata']);
 
         if ($object) {
             echo json_encode($object,JSON_UNESCAPED_UNICODE );
         }else {
-            echo null;
+            echo 504;
         }
     }
     else{
-        echo null;
+        echo 504;
     }
 ?>
