@@ -35,10 +35,10 @@ $password = $_POST['password'];
         if ($object) {
             echo json_encode($object,JSON_UNESCAPED_UNICODE );
         }else {
-            echo 504;
+            echo null;
         }
     }
     else{
-        echo 504;
+        echo null;
     }
 ?>
