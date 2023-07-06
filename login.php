@@ -47,7 +47,11 @@ header("Access-Control-Allow-Methods: *");
             $object= new infor($row['idRole'],$row['username'],$row['urlAvata']);
     
             if ($object) {
-                echo json_encode($object,JSON_UNESCAPED_UNICODE );
+                echo json_encode(
+                    Array("value"=>$username." ".$password,
+                    "object"=>$object),JSON_UNESCAPED_UNICODE );
+
+                    //echo json_encode(($object),JSON_UNESCAPED_UNICODE );
             }
         }
         else{
