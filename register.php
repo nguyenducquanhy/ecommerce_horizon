@@ -37,6 +37,7 @@ function register(){
         $insert = mysqli_query($connect,$sqli);
         if($insert){
             echo 200;
+            sendOTP($username,$email);
         }else{
             echo 504;
         }
